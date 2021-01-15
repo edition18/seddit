@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 
-const Dummy: FunctionComponent<React.ReactNode> = () => {
+const Dummy: FunctionComponent = () => {
   return <div></div>;
 };
 

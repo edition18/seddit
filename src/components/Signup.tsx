@@ -4,11 +4,11 @@ import { Alert, AlertTitle } from "@material-ui/lab"; // for Lab components
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "../styles/customStyles";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 
 import firebase from "../config";
 
-const Signup: FunctionComponent<React.ReactNode> = () => {
+const Signup: FunctionComponent = () => {
   const [alerts, setAlerts] = useState<string[]>([]);
   useEffect(() => {
     setTimeout(() => setAlerts([]), 10000);
@@ -28,18 +28,8 @@ const Signup: FunctionComponent<React.ReactNode> = () => {
     console.log(formData);
   };
 
-  // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-
-  //   // event.preventDefault();
-  //   // console.log(event);
-  //   // console.log(event);
-  // };
-
-  // // check if password match
-  // if not , alert // set timeout callback on the state?
-  // if not check the
   // event: React.MouseEvent<HTMLButtonElement>
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (formData.password !== formData.passwordConfirm) {
       setAlerts([...alerts, "Check your password!"]);
       return;
@@ -49,9 +39,9 @@ const Signup: FunctionComponent<React.ReactNode> = () => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(formData.email, formData.password)
-      .then((user) => {
-        console.log(typeof user);
-        console.log(user);
+      .then(() => {
+        const currentUser = firebase.auth().currentUser;
+        currentUser ? console.log(currentUser.toJSON()) : "";
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -123,8 +113,9 @@ const Signup: FunctionComponent<React.ReactNode> = () => {
   );
 };
 
-const mapStateToProps = () => ({
-  // what state am I interested in?
-});
+// const mapStateToProps = () => ({
+//   // what state am I interested in?
+// });
 
-export default connect(mapStateToProps)(Signup);
+// export default connect(mapStateToProps)(Signup);
+export default Signup;
