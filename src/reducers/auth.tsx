@@ -7,10 +7,16 @@ import {
   LOGIN_FAILURE,
 } from "../actions/types";
 import { IKeyUserInformation } from "../typeDefinitions";
-const initialState = {
+
+interface IInitialState extends IKeyUserInformation {
+  isAuthenticated: boolean;
+}
+
+const initialState: IInitialState = {
   isAuthenticated: false,
   // false at first, but will change it to true if auth succcess
-  keyUserInformation: {} as IKeyUserInformation | undefined,
+  email: "",
+  uid: "",
   loading: false,
 };
 
@@ -25,7 +31,8 @@ export default function (
       return {
         ...state,
         isAuthenticated: true,
-        keyUserInformation: action.payload,
+        email: action.payload?.email,
+        uid: action.payload?.uid,
       };
     case LOGIN_FAILURE:
     case REGISTER_FAILURE:

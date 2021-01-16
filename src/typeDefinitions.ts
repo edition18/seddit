@@ -15,7 +15,7 @@ export {};
 // }
 
 export interface IKeyUserInformation {
-  email: string | null;
-  uid: string;
+  email: string | null | undefined;
+  uid: string | null | undefined;
   loading: boolean;
 }

@@ -17,11 +17,9 @@ const Navbar = ({ auth }: navbarProps) => {
   // let userLoaded = false;
   useEffect(() => {
     loadAlreadyLoggedIn();
-  }, []);
+  }, [auth.email]);
   return (
     <AppBar position="static" color="primary">
-      {console.log(auth)}
-
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="menu">
           <RecordVoiceOverIcon />
@@ -31,7 +29,11 @@ const Navbar = ({ auth }: navbarProps) => {
           Signup
         </Button>
         <Button color="inherit">Login</Button>
-        {console.log(Object.keys(auth))}
+        {auth.email !== undefined && auth.email !== null ? (
+          <div>{auth.email} dsadas</div>
+        ) : (
+          ""
+        )}
       </Toolbar>
     </AppBar>
   );
