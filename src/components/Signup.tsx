@@ -116,9 +116,7 @@ const Signup: FunctionComponent = () => {
   );
 };
 
-const mapStateToProps = () => ({
-  // what state am I interested in?
-});
+const mapStateToProps = () => ({});
 
 // export default connect(mapStateToProps)(Signup);
 // export default Signup;

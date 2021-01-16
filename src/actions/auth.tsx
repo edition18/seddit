@@ -3,7 +3,12 @@ export {};
 import firebase from "../config";
 import { store } from "../store";
 
-import { REGISTER_SUCCESS, REGISTER_FAILURE, LOGIN_SUCCESS } from "./types";
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+} from "./types";
 import { IKeyUserInformation } from "../typeDefinitions";
 // import { Action, ActionCreator, Dispatch } from "redux";
 // import { ThunkAction } from "redux-thunk";
@@ -25,6 +30,7 @@ export async function signup(email: string, password: string): Promise<void> {
       const keyUserInformation: IKeyUserInformation = {
         email: currentUser ? currentUser.email : "",
         uid: currentUser ? currentUser.uid : "",
+        loading: false,
       };
       store.dispatch({ type: REGISTER_SUCCESS, payload: keyUserInformation });
     })
@@ -47,10 +53,12 @@ export async function loadAlreadyLoggedIn(): Promise<void> {
       const keyUserInformation: IKeyUserInformation = {
         email: currentUser ? currentUser.email : "",
         uid: currentUser ? currentUser.uid : "",
+        loading: false,
       };
       store.dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
     } else {
       // No user is signed in.
+      store.dispatch({ type: LOGIN_FAILURE });
     }
   });
 }
