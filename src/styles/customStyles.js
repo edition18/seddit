@@ -16,6 +16,9 @@ const useStyles = makeStyles(() => ({
   marginAutoItem: {
     margin: "auto",
   },
+  centerGridItem: {
+    textAlign: "center",
+  },
 }));
 
 export default useStyles;

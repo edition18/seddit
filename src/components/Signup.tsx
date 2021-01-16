@@ -4,15 +4,17 @@ import { Alert, AlertTitle } from "@material-ui/lab"; // for Lab components
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "../styles/customStyles";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
+import { signup, loadAlreadyLoggedIn } from "../actions/auth";
 
-import firebase from "../config";
+// import firebase from "../config";
 
 const Signup: FunctionComponent = () => {
   const [alerts, setAlerts] = useState<string[]>([]);
   useEffect(() => {
+    loadAlreadyLoggedIn();
     setTimeout(() => setAlerts([]), 10000);
-  }, [alerts]);
+  }, [alert]);
   const classes = useStyles();
 
   // const [email, setEmail] = useState(String);
@@ -36,19 +38,20 @@ const Signup: FunctionComponent = () => {
     }
     // create account and autosignin
     // firebase does not require me to use JWT to encode password
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(formData.email, formData.password)
-      .then(() => {
-        const currentUser = firebase.auth().currentUser;
-        currentUser ? console.log(currentUser.toJSON()) : "";
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode + " " + errorMessage);
-        // ..
-      });
+    signup(formData.email, formData.password);
+    // firebase
+    //   .auth()
+    //   .createUserWithEmailAndPassword(formData.email, formData.password)
+    //   .then(() => {
+    //     const currentUser = firebase.auth().currentUser;
+    //     currentUser ? console.log(currentUser.toJSON()) : "";
+    //   })
+    //   .catch((error) => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     console.log(errorCode + " " + errorMessage);
+    //     // ..
+    //   });
 
     // console.log(event);
     // setAlerts([...alerts, "hello"]);
@@ -71,7 +74,7 @@ const Signup: FunctionComponent = () => {
         <Grid container className={classes.container}>
           {/* adds more padding w/ this subcontainer*/}
           <Grid container className={classes.subcontainer}>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.centerGridItem}>
               <TextField
                 name="email"
                 onChange={onChange}
@@ -83,7 +86,7 @@ const Signup: FunctionComponent = () => {
             </Grid>
           </Grid>
           <Grid container className={classes.subcontainer}>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.centerGridItem}>
               <TextField
                 name="password"
                 type="password"
@@ -95,7 +98,7 @@ const Signup: FunctionComponent = () => {
             </Grid>
           </Grid>
           <Grid container className={classes.subcontainer}>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.centerGridItem}>
               <TextField
                 name="passwordConfirm"
                 type="password"
@@ -113,9 +116,11 @@ const Signup: FunctionComponent = () => {
   );
 };
 
-// const mapStateToProps = () => ({
-//   // what state am I interested in?
-// });
+const mapStateToProps = () => ({
+  // what state am I interested in?
+});
 
 // export default connect(mapStateToProps)(Signup);
-export default Signup;
+// export default Signup;
+
+export default connect(mapStateToProps, { signup })(Signup);

@@ -22,8 +22,11 @@ export async function signup(email: string, password: string): Promise<void> {
     .then(() => {
       // authentication successful if you get here
       const currentUser = firebase.auth().currentUser;
-      currentUser ? console.log(currentUser.toJSON()) : "";
-      store.dispatch({ type: REGISTER_SUCCESS });
+      const keyUserInformation: IKeyUserInformation = {
+        email: currentUser ? currentUser.email : "",
+        uid: currentUser ? currentUser.uid : "",
+      };
+      store.dispatch({ type: REGISTER_SUCCESS, payload: keyUserInformation });
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -35,15 +38,33 @@ export async function signup(email: string, password: string): Promise<void> {
 }
 
 export async function loadAlreadyLoggedIn(): Promise<void> {
-  const currentUser = firebase.auth().currentUser;
+  // recommended way to ensure Auth object complete initialization
+  // https://firebase.google.com/docs/auth/web/manage-users
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      const currentUser = firebase.auth().currentUser;
 
-  const keyUserInformation: IKeyUserInformation = {
-    email: currentUser ? currentUser.email : "",
-    uid: currentUser ? currentUser.uid : "",
-  };
-
-  store.dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
+      const keyUserInformation: IKeyUserInformation = {
+        email: currentUser ? currentUser.email : "",
+        uid: currentUser ? currentUser.uid : "",
+      };
+      store.dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
+    } else {
+      // No user is signed in.
+    }
+  });
 }
+
+// export async function loadAlreadyLoggedIn(): Promise<void> {
+//   const currentUser = firebase.auth().currentUser;
+
+//   const keyUserInformation: IKeyUserInformation = {
+//     email: currentUser ? currentUser.email : "",
+//     uid: currentUser ? currentUser.uid : "",
+//   };
+
+//   store.dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
+// }
 
 // export const loadAlreadyLoggedIn = () => async (
 //   dispatch: typeof store.dispatch
