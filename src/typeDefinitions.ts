@@ -1,13 +1,20 @@
 export {};
 
+// import { ThunkAction } from "redux-thunk";
+// import { StateTree } from "react-redux";
+// // import { store } from "./store";
+
 // export interface IPayload<T> {
-//   payload: T;
+//   type: string;
+//   payload?: T;
 // }
 
-// const payloads = <T>({ payload }: IPayload<T>) => {
-//   console.log(payload);
-// };
+// export interface IAuthState {
+//   type: string;
+//   payload: null | {string[]};
+// }
 
-// const item: IPayload = {
-//   payload: "this",
-// };
+export interface IKeyUserInformation {
+  email: string | null;
+  uid: string;
+}
