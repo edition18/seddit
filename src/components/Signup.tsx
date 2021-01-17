@@ -5,7 +5,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "../styles/customStyles";
 import { connect } from "react-redux";
-import { signup, loadAlreadyLoggedIn, test } from "../actions/auth";
+import { signup, loadAlreadyLoggedIn } from "../actions/auth";
 
 // import firebase from "../config";
 
@@ -112,7 +112,6 @@ const Signup: FunctionComponent = () => {
         </Grid>
         <Button onClick={onSubmit}>Check</Button>
       </form>
-      <button onClick={test}>Test</button>
     </Container>
   );
 };
@@ -122,4 +121,4 @@ const mapStateToProps = () => ({});
 // export default connect(mapStateToProps)(Signup);
 // export default Signup;
 
-export default connect(mapStateToProps, { test })(Signup);
+export default connect(mapStateToProps)(Signup);

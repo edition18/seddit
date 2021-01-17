@@ -1,20 +1,8 @@
 export {};
 
-import combinedReducers from "./reducers/index";
-
-// import { ThunkAction } from "redux-thunk";
-// import { StateTree } from "react-redux";
-// // import { store } from "./store";
-
-// export interface IPayload<T> {
-//   type: string;
-//   payload?: T;
-// }
-
-// export interface IAuthState {
-//   type: string;
-//   payload: null | {string[]};
-// }
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
+import { useDispatch } from "react-redux";
 
 export interface IKeyUserInformation {
   email: string | null | undefined;
@@ -27,4 +15,7 @@ export interface IAuthAction {
   payload?: IKeyUserInformation;
 }
 
-export type RootState = ReturnType<typeof combinedReducers>;
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const useThunkDispatch = () =>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  useDispatch<ThunkDispatch<any, unknown, AnyAction>>();

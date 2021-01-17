@@ -2,6 +2,8 @@ export {};
 // import * as actionTypes from "./types";
 import firebase from "../config";
 import { store } from "../store";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
@@ -60,11 +62,20 @@ export async function loadAlreadyLoggedIn(): Promise<void> {
   });
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const test: any = () => async (dispatch: any) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const test = () => async (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dispatch: ThunkDispatch<any, unknown, AnyAction>
+): Promise<void> => {
   dispatch({ type: LOGIN_FAILURE });
   console.log("test");
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// export const test: any = () => async (dispatch: any) => {
+//   dispatch({ type: LOGIN_FAILURE });
+//   console.log("test");
+// };
 
 // import { ActionCreator, Action, Dispatch } from "redux";
 // import { ThunkAction } from "redux-thunk";

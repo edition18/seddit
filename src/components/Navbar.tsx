@@ -6,16 +6,15 @@ import RecordVoiceOverIcon from "@material-ui/icons/RecordVoiceOver";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { IKeyUserInformation } from "../typeDefinitions";
-import { loadAlreadyLoggedIn } from "../actions/auth";
+import { IKeyUserInformation, useThunkDispatch } from "../typeDefinitions";
+import { loadAlreadyLoggedIn, test } from "../actions/auth";
 
 type navbarProps = {
   auth: IKeyUserInformation;
-  dispatch: Dispatch;
 };
 
-const Navbar = ({ auth, dispatch }: navbarProps) => {
+const Navbar = ({ auth }: navbarProps) => {
+  const thunkDispatch = useThunkDispatch();
   useEffect(() => {
     loadAlreadyLoggedIn();
   }, []);
@@ -35,8 +34,11 @@ const Navbar = ({ auth, dispatch }: navbarProps) => {
         ) : (
           ""
         )}
-        <button onClick={() => dispatch({ type: "LOGIN_FAILURE" })}>
+        <button onClick={() => thunkDispatch({ type: "LOGIN_FAILURE" })}>
           Test props.dispatch-
+        </button>
+        <button onClick={() => thunkDispatch(test())}>
+          Test the dummyaction
         </button>
       </Toolbar>
     </AppBar>
