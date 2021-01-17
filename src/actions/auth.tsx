@@ -9,10 +9,7 @@ import {
   LOGIN_FAILURE,
 } from "./types";
 import { IKeyUserInformation } from "../typeDefinitions";
-
-// import { Action, ActionCreator, Dispatch } from "redux";
 // import { ThunkAction } from "redux-thunk";
-// import { useDispatch } from "react-redux";
 
 // normal action type
 // interface AuthAction extends Action {
@@ -63,6 +60,12 @@ export async function loadAlreadyLoggedIn(): Promise<void> {
   });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const test: any = () => async (dispatch: any) => {
+  dispatch({ type: LOGIN_FAILURE });
+  console.log("test");
+};
+
 // import { ActionCreator, Action, Dispatch } from "redux";
 // import { ThunkAction } from "redux-thunk";
 
@@ -87,67 +90,4 @@ export async function loadAlreadyLoggedIn(): Promise<void> {
 //       });
 //     }
 //   };
-// };
-
-// export const loadAlreadyLoggedIn: IAuthAction = async () => (
-//   dispatch: ThunkAction
-// ) => {
-//   firebase.auth().onAuthStateChanged(function (user) {
-//     if (user) {
-//       const currentUser = firebase.auth().currentUser;
-
-//       const keyUserInformation: IKeyUserInformation = {
-//         email: currentUser ? currentUser.email : "",
-//         uid: currentUser ? currentUser.uid : "",
-//         loading: false,
-//       };
-//       dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
-//     } else {
-//       // No user is signed in.
-//       dispatch({ type: LOGIN_FAILURE });
-//     }
-//   });
-// };
-
-// export async function loadAlreadyLoggedIn(): Promise<void> {
-//   const currentUser = firebase.auth().currentUser;
-
-//   const keyUserInformation: IKeyUserInformation = {
-//     email: currentUser ? currentUser.email : "",
-//     uid: currentUser ? currentUser.uid : "",
-//   };
-
-//   store.dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
-// }
-
-// export const loadAlreadyLoggedIn = () => async (
-//   dispatch: typeof store.dispatch
-// ): Action<void> => {
-//   console.log("yes");
-//   dispatch({ type: REGISTER_SUCCESS });
-// };
-
-// export const signup = (email: string, password: string) => async (
-//   dispatch: Dispatch
-// ): Promise<void> => {
-//   // const action: [number, Promise<T>] = [1, "string"];
-//   // Promise<T>
-//   try {
-//     firebase
-//       .auth()
-//       .createUserWithEmailAndPassword(email, password)
-//       .then((user) => {
-//         // authentication successful if you get here
-//         console.log(user);
-//         dispatch({ type: REGISTER_SUCCESS });
-//         // type
-//         // payload
-//       });
-//   } catch (error) {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     console.log(errorCode + " " + errorMessage);
-//     // auth fail if you get here
-//     dispatch({ type: REGISTER_FAILURE });
-//   }
 // };

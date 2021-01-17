@@ -35,7 +35,9 @@ const Navbar = ({ auth, dispatch }: navbarProps) => {
         ) : (
           ""
         )}
-        <button onClick={() => dispatch({ type: "LOGIN_FAILURE" })}>-</button>
+        <button onClick={() => dispatch({ type: "LOGIN_FAILURE" })}>
+          Test props.dispatch-
+        </button>
       </Toolbar>
     </AppBar>
   );

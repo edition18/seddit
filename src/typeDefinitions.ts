@@ -1,5 +1,7 @@
 export {};
 
+import combinedReducers from "./reducers/index";
+
 // import { ThunkAction } from "redux-thunk";
 // import { StateTree } from "react-redux";
 // // import { store } from "./store";
@@ -24,3 +26,5 @@ export interface IAuthAction {
   type: string;
   payload?: IKeyUserInformation;
 }
+
+export type RootState = ReturnType<typeof combinedReducers>;
