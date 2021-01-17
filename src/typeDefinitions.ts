@@ -19,3 +19,8 @@ export interface IKeyUserInformation {
   uid: string | null | undefined;
   loading: boolean;
 }
+
+export interface IAuthAction {
+  type: string;
+  payload?: IKeyUserInformation;
+}

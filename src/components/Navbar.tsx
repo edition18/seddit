@@ -6,18 +6,19 @@ import RecordVoiceOverIcon from "@material-ui/icons/RecordVoiceOver";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import { IKeyUserInformation } from "../typeDefinitions";
 import { loadAlreadyLoggedIn } from "../actions/auth";
 
 type navbarProps = {
   auth: IKeyUserInformation;
+  dispatch: Dispatch;
 };
 
-const Navbar = ({ auth }: navbarProps) => {
-  // let userLoaded = false;
+const Navbar = ({ auth, dispatch }: navbarProps) => {
   useEffect(() => {
     loadAlreadyLoggedIn();
-  }, [auth.email]);
+  }, []);
   return (
     <AppBar position="static" color="primary">
       <Toolbar>
@@ -34,6 +35,7 @@ const Navbar = ({ auth }: navbarProps) => {
         ) : (
           ""
         )}
+        <button onClick={() => dispatch({ type: "LOGIN_FAILURE" })}>-</button>
       </Toolbar>
     </AppBar>
   );

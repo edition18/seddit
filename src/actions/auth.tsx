@@ -2,7 +2,6 @@ export {};
 // import * as actionTypes from "./types";
 import firebase from "../config";
 import { store } from "../store";
-
 import {
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
@@ -10,6 +9,7 @@ import {
   LOGIN_FAILURE,
 } from "./types";
 import { IKeyUserInformation } from "../typeDefinitions";
+
 // import { Action, ActionCreator, Dispatch } from "redux";
 // import { ThunkAction } from "redux-thunk";
 // import { useDispatch } from "react-redux";
@@ -62,6 +62,52 @@ export async function loadAlreadyLoggedIn(): Promise<void> {
     }
   });
 }
+
+// import { ActionCreator, Action, Dispatch } from "redux";
+// import { ThunkAction } from "redux-thunk";
+
+// export type AppThunk = ActionCreator<
+//   ThunkAction<void, typeof store, null, Action<string>>
+// >;
+
+// export const fetchRequest: AppThunk = () => {
+//   firebase.auth().onAuthStateChanged((user) => {
+//     const currentUser = firebase.auth().currentUser;
+//     let keyUserInformation = "";
+//   });
+//   return (dispatch: Dispatch): Action => {
+//     try {
+//       return dispatch({
+//         type: LOGIN_SUCCESS,
+//         payload: keyUserInformation,
+//       });
+//     } catch (e) {
+//       return dispatch({
+//         type: LOGIN_FAILURE,
+//       });
+//     }
+//   };
+// };
+
+// export const loadAlreadyLoggedIn: IAuthAction = async () => (
+//   dispatch: ThunkAction
+// ) => {
+//   firebase.auth().onAuthStateChanged(function (user) {
+//     if (user) {
+//       const currentUser = firebase.auth().currentUser;
+
+//       const keyUserInformation: IKeyUserInformation = {
+//         email: currentUser ? currentUser.email : "",
+//         uid: currentUser ? currentUser.uid : "",
+//         loading: false,
+//       };
+//       dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
+//     } else {
+//       // No user is signed in.
+//       dispatch({ type: LOGIN_FAILURE });
+//     }
+//   });
+// };
 
 // export async function loadAlreadyLoggedIn(): Promise<void> {
 //   const currentUser = firebase.auth().currentUser;
