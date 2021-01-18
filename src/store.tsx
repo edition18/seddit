@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, Store } from "redux";
-import combinedReducers from "./reducers/index";
+import combinedReducers from "./reducers/indexSlice";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
