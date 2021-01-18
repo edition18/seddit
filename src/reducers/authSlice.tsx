@@ -1,18 +1,16 @@
-export {};
-
 import {
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
 } from "../actions/types";
-import { IKeyUserInformation } from "../typeDefinitions";
+import { IAuthPayload } from "../typeDefinitions";
 
-interface IInitialState extends IKeyUserInformation {
+export interface IAuthState extends IAuthPayload {
   isAuthenticated: boolean;
 }
 
-const initialState: IInitialState = {
+const initialState: IAuthState = {
   isAuthenticated: false,
   // false at first, but will change it to true if auth succcess
   email: "",
@@ -22,7 +20,7 @@ const initialState: IInitialState = {
 
 export default function (
   state = initialState,
-  action: { type: string; payload?: IKeyUserInformation }
+  action: { type: string; payload?: IAuthPayload }
 ): typeof state {
   // return type of state
   switch (action.type) {

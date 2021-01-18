@@ -1,20 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FunctionComponent } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import RecordVoiceOverIcon from "@material-ui/icons/RecordVoiceOver";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { connect } from "react-redux";
-import { IKeyUserInformation, useThunkDispatch } from "../typeDefinitions";
-import { loadAlreadyLoggedIn, test } from "../actions/auth";
+import { ICombinedState } from "../typeDefinitions";
+import { loadAlreadyLoggedIn } from "../actions/auth";
+import { useSelector } from "react-redux";
 
-type navbarProps = {
-  auth: IKeyUserInformation;
-};
+const Navbar: FunctionComponent = () => {
+  // const selectAuth = (state: { auth: IAuthState }) => state.auth;
+  // const authState = useSelector(selectAuth);
 
-const Navbar = ({ auth }: navbarProps) => {
-  const thunkDispatch = useThunkDispatch();
+  const authState = useSelector((state: ICombinedState) => state.auth);
+
   useEffect(() => {
     loadAlreadyLoggedIn();
   }, []);
@@ -29,27 +29,23 @@ const Navbar = ({ auth }: navbarProps) => {
           Signup
         </Button>
         <Button color="inherit">Login</Button>
-        {auth.email !== undefined && auth.email !== null ? (
-          <div>{auth.email} dsadas</div>
+        {authState.email !== undefined && authState.email !== null ? (
+          <div>{authState.email} dsadas</div>
         ) : (
           ""
         )}
-        <button onClick={() => thunkDispatch({ type: "LOGIN_FAILURE" })}>
-          Test props.dispatch-
-        </button>
-        <button onClick={() => thunkDispatch(test())}>
-          Test the dummyaction
-        </button>
       </Toolbar>
     </AppBar>
   );
 };
 
-const mapStateToProps = (state: { auth: IKeyUserInformation }) => ({
-  auth: state.auth,
-});
+export default Navbar;
 
-// export default connect(mapStateToProps)(Signup);
-// export default Signup;
-
-export default connect(mapStateToProps)(Navbar);
+// examples
+// const thunkDispatch = useThunkDispatch();
+// <button onClick={() => thunkDispatch({ type: "LOGIN_FAILURE" })}>
+// Test props.dispatch-
+// </button>
+// <button onClick={() => thunkDispatch(test())}>
+// Test the dummyaction
+// </button>

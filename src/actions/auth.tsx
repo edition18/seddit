@@ -1,7 +1,5 @@
-export {};
 // import * as actionTypes from "./types";
 import firebase from "../config";
-import { store } from "../store";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import {
@@ -10,7 +8,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
 } from "./types";
-import { IKeyUserInformation } from "../typeDefinitions";
+import { IAuthPayload } from "../typeDefinitions";
 // import { ThunkAction } from "redux-thunk";
 
 // normal action type
@@ -19,48 +17,56 @@ import { IKeyUserInformation } from "../typeDefinitions";
 //   payload?: unknown;
 // }
 
-export async function signup(email: string, password: string): Promise<void> {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const signup = (email: string, password: string) => async (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dispatch: ThunkDispatch<any, unknown, AnyAction>
+): Promise<void> => {
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(() => {
       // authentication successful if you get here
       const currentUser = firebase.auth().currentUser;
-      const keyUserInformation: IKeyUserInformation = {
-        email: currentUser ? currentUser.email : "",
-        uid: currentUser ? currentUser.uid : "",
+      const keyUserInformation: IAuthPayload = {
+        email: currentUser ? currentUser.email : undefined,
+        uid: currentUser ? currentUser.uid : undefined,
         loading: false,
       };
-      store.dispatch({ type: REGISTER_SUCCESS, payload: keyUserInformation });
+      dispatch({ type: REGISTER_SUCCESS, payload: keyUserInformation });
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode + " " + errorMessage);
-      store.dispatch({ type: REGISTER_FAILURE });
+      dispatch({ type: REGISTER_FAILURE });
       // ..
     });
-}
+};
 
-export async function loadAlreadyLoggedIn(): Promise<void> {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const loadAlreadyLoggedIn = () => async (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dispatch: ThunkDispatch<any, unknown, AnyAction>
+): Promise<void> => {
   // recommended way to ensure Auth object complete initialization
   // https://firebase.google.com/docs/auth/web/manage-users
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       const currentUser = firebase.auth().currentUser;
 
-      const keyUserInformation: IKeyUserInformation = {
+      const keyUserInformation: IAuthPayload = {
         email: currentUser ? currentUser.email : "",
         uid: currentUser ? currentUser.uid : "",
         loading: false,
       };
-      store.dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
+      dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
     } else {
       // No user is signed in.
-      store.dispatch({ type: LOGIN_FAILURE });
+      dispatch({ type: LOGIN_FAILURE });
     }
   });
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const test = () => async (

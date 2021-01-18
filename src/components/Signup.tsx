@@ -4,15 +4,23 @@ import { Alert, AlertTitle } from "@material-ui/lab"; // for Lab components
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "../styles/customStyles";
-import { connect } from "react-redux";
 import { signup, loadAlreadyLoggedIn } from "../actions/auth";
+import { alertError } from "../actions/alerts";
+import { ICombinedState, useThunkDispatch } from "../typeDefinitions";
+
+import { useSelector } from "react-redux";
 
 // import firebase from "../config";
 
 const Signup: FunctionComponent = () => {
+  const thunkDispatch = useThunkDispatch();
+  const authState = useSelector((state: ICombinedState) => state.auth);
+  const alertsState = useSelector((state: ICombinedState) => state.alerts);
+
   const [alerts, setAlerts] = useState<string[]>([]);
   useEffect(() => {
-    loadAlreadyLoggedIn();
+    thunkDispatch(loadAlreadyLoggedIn());
+
     setTimeout(() => setAlerts([]), 10000);
   }, [alert]);
   const classes = useStyles();
@@ -27,46 +35,26 @@ const Signup: FunctionComponent = () => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
-    console.log(formData);
   };
 
   // event: React.MouseEvent<HTMLButtonElement>
   const onSubmit = async () => {
     if (formData.password !== formData.passwordConfirm) {
       setAlerts([...alerts, "Check your password!"]);
+      alertError("Check Password!", "error");
       return;
     }
-    // create account and autosignin
-    // firebase does not require me to use JWT to encode password
-    signup(formData.email, formData.password);
-    // firebase
-    //   .auth()
-    //   .createUserWithEmailAndPassword(formData.email, formData.password)
-    //   .then(() => {
-    //     const currentUser = firebase.auth().currentUser;
-    //     currentUser ? console.log(currentUser.toJSON()) : "";
-    //   })
-    //   .catch((error) => {
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     console.log(errorCode + " " + errorMessage);
-    //     // ..
-    //   });
 
-    // console.log(event);
-    // setAlerts([...alerts, "hello"]);
-    // event.preventDefault();
-    // console.log(event);
-    // console.log(event);
+    thunkDispatch(signup(formData.email, formData.password));
   };
 
   return (
     <Container maxWidth="xs">
-      {alerts.length !== 0
-        ? alerts.map((message) => (
-            <Alert variant="filled" severity="error">
+      {alertsState.length !== 0
+        ? alertsState.map((alert) => (
+            <Alert variant="filled" severity={alert.severity}>
               <AlertTitle>Error</AlertTitle>
-              {message}
+              {alert.message}
             </Alert>
           ))
         : ""}
@@ -76,6 +64,7 @@ const Signup: FunctionComponent = () => {
           <Grid container className={classes.subcontainer}>
             <Grid item xs={12} className={classes.centerGridItem}>
               <TextField
+                disabled={authState.isAuthenticated}
                 name="email"
                 onChange={onChange}
                 className={classes.textFields}
@@ -88,6 +77,7 @@ const Signup: FunctionComponent = () => {
           <Grid container className={classes.subcontainer}>
             <Grid item xs={12} className={classes.centerGridItem}>
               <TextField
+                disabled={authState.isAuthenticated}
                 name="password"
                 type="password"
                 onChange={onChange}
@@ -100,6 +90,7 @@ const Signup: FunctionComponent = () => {
           <Grid container className={classes.subcontainer}>
             <Grid item xs={12} className={classes.centerGridItem}>
               <TextField
+                disabled={authState.isAuthenticated}
                 name="passwordConfirm"
                 type="password"
                 onChange={onChange}
@@ -116,9 +107,4 @@ const Signup: FunctionComponent = () => {
   );
 };
 
-const mapStateToProps = () => ({});
-
-// export default connect(mapStateToProps)(Signup);
-// export default Signup;
-
-export default connect(mapStateToProps)(Signup);
+export default Signup;
