@@ -64,41 +64,15 @@ export async function loadAlreadyLoggedIn(): Promise<void> {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const test = () => async (
+  // test() => (dispatch: Dispatch) => Promise<void>:
+  // the test function, which is a "thunk action creator"
+  // - a function that returns:
+  // - a function that takes dispatch and returns:
+  //   - a Promise with nothing inside
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dispatch: ThunkDispatch<any, unknown, AnyAction>
-): Promise<void> => {
+) => {
   dispatch({ type: LOGIN_FAILURE });
-  console.log("test");
+
+  // no return statement here, so return nil
 };
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-// export const test: any = () => async (dispatch: any) => {
-//   dispatch({ type: LOGIN_FAILURE });
-//   console.log("test");
-// };
-
-// import { ActionCreator, Action, Dispatch } from "redux";
-// import { ThunkAction } from "redux-thunk";
-
-// export type AppThunk = ActionCreator<
-//   ThunkAction<void, typeof store, null, Action<string>>
-// >;
-
-// export const fetchRequest: AppThunk = () => {
-//   firebase.auth().onAuthStateChanged((user) => {
-//     const currentUser = firebase.auth().currentUser;
-//     let keyUserInformation = "";
-//   });
-//   return (dispatch: Dispatch): Action => {
-//     try {
-//       return dispatch({
-//         type: LOGIN_SUCCESS,
-//         payload: keyUserInformation,
-//       });
-//     } catch (e) {
-//       return dispatch({
-//         type: LOGIN_FAILURE,
-//       });
-//     }
-//   };
-// };

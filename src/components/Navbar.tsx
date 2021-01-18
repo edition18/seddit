@@ -40,6 +40,7 @@ const Navbar = ({ auth }: navbarProps) => {
         <button onClick={() => thunkDispatch(test())}>
           Test the dummyaction
         </button>
+        <button onClick={() => console.log(test)}>Test the dummyaction</button>
       </Toolbar>
     </AppBar>
   );
