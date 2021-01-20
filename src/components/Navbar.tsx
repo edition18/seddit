@@ -5,18 +5,17 @@ import IconButton from "@material-ui/core/IconButton";
 import RecordVoiceOverIcon from "@material-ui/icons/RecordVoiceOver";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { ICombinedState } from "../typeDefinitions";
-import { loadAlreadyLoggedIn } from "../actions/auth";
+import { useThunkDispatch, RootState } from "../definitions";
+import { loadAlreadyLoggedIn, test } from "../actions/auth";
 import { useSelector } from "react-redux";
 
 const Navbar: FunctionComponent = () => {
-  // const selectAuth = (state: { auth: IAuthState }) => state.auth;
-  // const authState = useSelector(selectAuth);
+  const thunkDispatch = useThunkDispatch();
 
-  const authState = useSelector((state: ICombinedState) => state.auth);
+  const authState = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
-    loadAlreadyLoggedIn();
+    thunkDispatch(loadAlreadyLoggedIn());
   }, []);
   return (
     <AppBar position="static" color="primary">
@@ -28,12 +27,17 @@ const Navbar: FunctionComponent = () => {
         <Button color="inherit" href="/signup">
           Signup
         </Button>
-        <Button color="inherit">Login</Button>
+        <Button color="inherit" href="/login">
+          Login
+        </Button>
         {authState.email !== undefined && authState.email !== null ? (
           <div>{authState.email} dsadas</div>
         ) : (
           ""
         )}
+
+        {/* <Button onClick={() => thunkDispatch(test)}>TEST</Button> */}
+        <Button onClick={() => thunkDispatch(test())}>TEST()</Button>
       </Toolbar>
     </AppBar>
   );

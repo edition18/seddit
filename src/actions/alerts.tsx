@@ -1,5 +1,5 @@
 import { SET_ALERT, REMOVE_ALERT } from "./types";
-import { IAlertPayload } from "../typeDefinitions";
+import { IAlertPayload } from "../definitions";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import { v4 as uuidv4 } from "uuid";

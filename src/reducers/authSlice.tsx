@@ -4,7 +4,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
 } from "../actions/types";
-import { IAuthPayload } from "../typeDefinitions";
+import { IAuthPayload } from "../definitions";
 
 export interface IAuthState extends IAuthPayload {
   isAuthenticated: boolean;

@@ -1,5 +1,5 @@
 import { SET_ALERT, REMOVE_ALERT } from "../actions/types";
-import { IAlertPayload } from "../typeDefinitions";
+import { IAlertPayload } from "../definitions";
 
 const initialState: IAlertPayload[] = [];
 

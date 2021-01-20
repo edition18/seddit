@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
+import Login from "./components/Login";
 import { ThemeProvider } from "@material-ui/core/styles";
 import "./styles/App.css";
 import theme from "./styles/theme";
@@ -22,6 +23,7 @@ const App: FunctionComponent = () => {
           <Switch>
             <Route path="/" exact component={Landing}></Route>
             <Route path="/signup" exact component={Signup}></Route>
+            <Route path="/login" exact component={Login}></Route>
           </Switch>
         </Router>
       </ThemeProvider>

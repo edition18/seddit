@@ -1,12 +1,12 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { TextField, Button } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab"; // for Lab components
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "../styles/customStyles";
-import { signup, loadAlreadyLoggedIn } from "../actions/auth";
+import { signup } from "../actions/auth";
 import { alertError } from "../actions/alerts";
-import { ICombinedState, useThunkDispatch } from "../typeDefinitions";
+import { RootState, useThunkDispatch } from "../definitions";
 
 import { useSelector } from "react-redux";
 
@@ -14,15 +14,9 @@ import { useSelector } from "react-redux";
 
 const Signup: FunctionComponent = () => {
   const thunkDispatch = useThunkDispatch();
-  const authState = useSelector((state: ICombinedState) => state.auth);
-  const alertsState = useSelector((state: ICombinedState) => state.alerts);
+  const authState = useSelector((state: RootState) => state.auth);
+  const alertsState = useSelector((state: RootState) => state.alerts);
 
-  const [alerts, setAlerts] = useState<string[]>([]);
-  useEffect(() => {
-    thunkDispatch(loadAlreadyLoggedIn());
-
-    setTimeout(() => setAlerts([]), 10000);
-  }, [alert]);
   const classes = useStyles();
 
   // const [email, setEmail] = useState(String);
@@ -40,7 +34,6 @@ const Signup: FunctionComponent = () => {
   // event: React.MouseEvent<HTMLButtonElement>
   const onSubmit = async () => {
     if (formData.password !== formData.passwordConfirm) {
-      setAlerts([...alerts, "Check your password!"]);
       alertError("Check Password!", "error");
       return;
     }
@@ -69,7 +62,9 @@ const Signup: FunctionComponent = () => {
                 onChange={onChange}
                 className={classes.textFields}
                 id="email"
-                label="email"
+                label={
+                  authState.isAuthenticated ? "Already Logged In" : "email"
+                }
                 variant="outlined"
               />
             </Grid>
@@ -82,7 +77,9 @@ const Signup: FunctionComponent = () => {
                 type="password"
                 onChange={onChange}
                 id="password"
-                label="password"
+                label={
+                  authState.isAuthenticated ? "Already Logged In" : "password"
+                }
                 variant="outlined"
               />
             </Grid>
@@ -95,13 +92,19 @@ const Signup: FunctionComponent = () => {
                 type="password"
                 onChange={onChange}
                 id="passwordConfirm"
-                label="passwordConfirm"
+                label={
+                  authState.isAuthenticated
+                    ? "Already Logged In"
+                    : "passwordConfirm"
+                }
                 variant="outlined"
               />
             </Grid>
           </Grid>
         </Grid>
-        <Button onClick={onSubmit}>Check</Button>
+        <Button disabled={authState.isAuthenticated} onClick={onSubmit}>
+          Signup
+        </Button>
       </form>
     </Container>
   );
