@@ -17,6 +17,7 @@ const Navbar: FunctionComponent = () => {
   useEffect(() => {
     thunkDispatch(loadAlreadyLoggedIn());
   }, []);
+
   return (
     <AppBar position="static" color="primary">
       <Toolbar>
@@ -31,7 +32,7 @@ const Navbar: FunctionComponent = () => {
           Login
         </Button>
         {authState.email !== undefined && authState.email !== null ? (
-          <div>{authState.email} dsadas</div>
+          <div>{authState.email}</div>
         ) : (
           ""
         )}

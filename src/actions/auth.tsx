@@ -56,14 +56,20 @@ export const loadAlreadyLoggedIn = (): AppThunk => async (
       const currentUser = firebase.auth().currentUser;
 
       const keyUserInformation: IAuthPayload = {
-        email: currentUser ? currentUser.email : "",
-        uid: currentUser ? currentUser.uid : "",
+        email: currentUser ? currentUser.email : undefined,
+        uid: currentUser ? currentUser.uid : undefined,
         loading: false,
       };
       dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
     } else {
       // No user is signed in.
-      dispatch({ type: LOGIN_FAILURE });
+
+      const keyUserInformation: IAuthPayload = {
+        email: undefined,
+        uid: undefined,
+        loading: false,
+      };
+      dispatch({ type: LOGIN_FAILURE, payload: keyUserInformation });
     }
   });
 };

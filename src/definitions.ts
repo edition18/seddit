@@ -20,9 +20,21 @@ export interface IActionCreator extends AnyAction {
   payload?: IAlertPayload | IAuthPayload;
 }
 
+export interface IAuthState extends IAuthPayload {
+  isAuthenticated: boolean;
+}
+
 export interface IAuthPayload {
   email: string | undefined | null;
   uid: string | undefined | null;
+  loading: boolean;
+}
+
+export interface IAppState {
+  loading: boolean;
+}
+
+export interface IAppPayload {
   loading: boolean;
 }
 

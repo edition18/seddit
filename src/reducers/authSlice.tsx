@@ -4,18 +4,14 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
 } from "../actions/types";
-import { IAuthPayload } from "../definitions";
-
-export interface IAuthState extends IAuthPayload {
-  isAuthenticated: boolean;
-}
+import { IAuthPayload, IAuthState } from "../definitions";
 
 const initialState: IAuthState = {
   isAuthenticated: false,
   // false at first, but will change it to true if auth succcess
   email: "",
   uid: "",
-  loading: false,
+  loading: true,
 };
 
 export default function (
@@ -31,12 +27,14 @@ export default function (
         isAuthenticated: true,
         email: action.payload?.email,
         uid: action.payload?.uid,
+        loading: false,
       };
     case LOGIN_FAILURE:
     case REGISTER_FAILURE:
       return {
         ...state,
         isAuthenticated: false,
+        loading: false,
       };
     default:
       return state;
