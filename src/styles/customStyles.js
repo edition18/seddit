@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import theme from "./theme";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -10,7 +11,7 @@ const useStyles = makeStyles(() => ({
     // height: 48,
     // padding: "0 30px",
   },
-  textFields: { color: "primary.light" },
+  textFields: { color: theme.palette.primary.dark },
   container: { padding: 9 },
   subcontainer: { padding: 6 },
   marginAutoItem: {
@@ -18,6 +19,9 @@ const useStyles = makeStyles(() => ({
   },
   centerGridItem: {
     textAlign: "center",
+  },
+  disabledButton: {
+    backgroundColor: theme.palette.secondary.dark,
   },
 }));
 

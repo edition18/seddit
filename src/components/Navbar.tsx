@@ -5,8 +5,9 @@ import IconButton from "@material-ui/core/IconButton";
 import RecordVoiceOverIcon from "@material-ui/icons/RecordVoiceOver";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 import { useThunkDispatch, RootState } from "../definitions";
-import { loadAlreadyLoggedIn, test } from "../actions/auth";
+import { loadAlreadyLoggedIn, test, logout } from "../actions/auth";
 import { useSelector } from "react-redux";
 
 const Navbar: FunctionComponent = () => {
@@ -25,20 +26,36 @@ const Navbar: FunctionComponent = () => {
           <RecordVoiceOverIcon />
         </IconButton>
         <Typography variant="h6">Seddit</Typography>
-        <Button color="inherit" href="/signup">
-          Signup
-        </Button>
-        <Button color="inherit" href="/login">
-          Login
-        </Button>
+        <Grid container>
+          <Grid item>
+            <Button color="inherit" href="/signup">
+              Signup
+            </Button>
+          </Grid>
+
+          <Grid item>
+            <Button color="inherit" href="/login">
+              Login
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button color="inherit" onClick={() => thunkDispatch(test())}>
+              TEST()
+            </Button>
+          </Grid>
+          <Grid item></Grid>
+        </Grid>
+
+        {/* <Button onClick={() => thunkDispatch(test)}>TEST</Button> */}
+
         {authState.email !== undefined && authState.email !== null ? (
-          <div>{authState.email}</div>
+          <div>Hello, {authState.email ? authState.email : "Guest"}</div>
         ) : (
           ""
         )}
-
-        {/* <Button onClick={() => thunkDispatch(test)}>TEST</Button> */}
-        <Button onClick={() => thunkDispatch(test())}>TEST()</Button>
+        <Button color="inherit" onClick={() => thunkDispatch(logout())}>
+          Logout
+        </Button>
       </Toolbar>
     </AppBar>
   );

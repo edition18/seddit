@@ -6,6 +6,7 @@ import {
   REGISTER_FAILURE,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOGOUT,
 } from "./types";
 import { IAuthPayload, IActionCreator, AppThunk } from "../definitions";
 // import { ThunkAction } from "redux-thunk";
@@ -95,6 +96,11 @@ export const login = (email: string, password: string): AppThunk => async (
       console.log(errorCode + errorMessage);
       dispatch({ type: LOGIN_FAILURE });
     });
+};
+
+export const logout = (): AppThunk => async (dispatch): Promise<void> => {
+  firebase.auth().signOut();
+  dispatch({ type: LOGOUT });
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

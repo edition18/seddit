@@ -3,6 +3,7 @@ import {
   REGISTER_FAILURE,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOGOUT,
 } from "../actions/types";
 import { IAuthPayload, IAuthState } from "../definitions";
 
@@ -35,6 +36,14 @@ export default function (
         ...state,
         isAuthenticated: false,
         loading: false,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        isAuthenticated: false,
+        loading: false,
+        email: undefined,
+        uid: undefined,
       };
     default:
       return state;

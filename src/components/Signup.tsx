@@ -102,7 +102,11 @@ const Signup: FunctionComponent = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Button disabled={authState.isAuthenticated} onClick={onSubmit}>
+        <Button
+          disabled={authState.isAuthenticated}
+          classes={{ disabled: classes.disabledButton }}
+          onClick={onSubmit}
+        >
           Signup
         </Button>
       </form>
