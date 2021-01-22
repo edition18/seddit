@@ -46,3 +46,29 @@ export const useThunkDispatch = () =>
 //useDispatch is a function that returns another function that asks for an argument for Dispatch
 // so inorder to supply the argument to the returned function we need to do useDispatch()(arg)
 // which is how we utilize the hook
+
+export interface IUserPosts {
+  posts: IPost[];
+}
+
+export interface IPost {
+  // general information
+  timeCreated: Date;
+  uid: string; //creator uid?
+  //post specific
+  community: string; //subreddit eqv
+  thumbnail?: string;
+  header: string;
+  body: string;
+  comments?: IComment[];
+}
+
+export interface IComment {
+  // general information
+  timeCreated: Date;
+  author: string;
+  //post specific
+  parentCommentLink: string;
+  comments?: IComment[];
+  upvotes: number;
+}

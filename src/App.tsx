@@ -3,6 +3,8 @@ import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import Post from "./components/Post";
+import CommunityLanding from "./components/CommunityLanding";
 import { ThemeProvider } from "@material-ui/core/styles";
 import "./styles/App.css";
 import theme from "./styles/theme";
@@ -24,6 +26,12 @@ const App: FunctionComponent = () => {
             <Route path="/" exact component={Landing}></Route>
             <Route path="/signup" exact component={Signup}></Route>
             <Route path="/login" exact component={Login}></Route>
+            <Route path="/test" exact component={Post}></Route>
+            <Route
+              exact
+              path="/community/:community"
+              component={CommunityLanding}
+            />
           </Switch>
         </Router>
       </ThemeProvider>
