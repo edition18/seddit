@@ -4,7 +4,7 @@ import { Alert, AlertTitle } from "@material-ui/lab"; // for Lab components
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "../styles/customStyles";
-import { signup } from "../actions/auth";
+import { login } from "../actions/auth";
 import { RootState, useThunkDispatch } from "../definitions";
 
 import { useSelector } from "react-redux";
@@ -29,7 +29,7 @@ const Login: FunctionComponent = () => {
 
   // event: React.MouseEvent<HTMLButtonElement>
   const onSubmit = async () => {
-    thunkDispatch(signup(formData.email, formData.password));
+    thunkDispatch(login(formData.email, formData.password));
   };
   return (
     <Container maxWidth="xs">

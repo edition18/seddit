@@ -8,6 +8,7 @@ import {
   LOGIN_FAILURE,
   LOGOUT,
 } from "./types";
+import { alertError } from "../actions/alerts";
 import { IAuthPayload, IActionCreator, AppThunk } from "../definitions";
 // import { ThunkAction } from "redux-thunk";
 
@@ -41,6 +42,8 @@ export const signup = (email: string, password: string): AppThunk => async (
       const errorMessage = error.message;
       console.log(errorCode + " " + errorMessage);
       dispatch({ type: REGISTER_FAILURE });
+      dispatch(alertError("email already exists", "error"));
+
       // ..
     });
 };

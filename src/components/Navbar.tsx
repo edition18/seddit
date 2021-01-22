@@ -1,4 +1,4 @@
-import React, { useEffect, FunctionComponent } from "react";
+import React, { useEffect, FunctionComponent, Fragment } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -20,44 +20,59 @@ const Navbar: FunctionComponent = () => {
   }, []);
 
   return (
-    <AppBar position="static" color="primary">
-      <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="menu">
-          <RecordVoiceOverIcon />
-        </IconButton>
-        <Typography variant="h6">Seddit</Typography>
-        <Grid container>
-          <Grid item>
-            <Button color="inherit" href="/signup">
-              Signup
-            </Button>
-          </Grid>
+    <Fragment>
+      {!authState.loading ? (
+        <AppBar position="static" color="primary">
+          <Toolbar>
+            <IconButton edge="start" color="inherit" aria-label="menu">
+              <RecordVoiceOverIcon />
+            </IconButton>
+            <Typography variant="h6">Seddit</Typography>
+            <Grid container>
+              <Grid item>
+                <Button color="inherit" href="/signup">
+                  Signup
+                </Button>
+              </Grid>
 
-          <Grid item>
-            <Button color="inherit" href="/login">
-              Login
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button color="inherit" onClick={() => thunkDispatch(test())}>
-              TEST()
-            </Button>
-          </Grid>
-          <Grid item></Grid>
-        </Grid>
+              {!authState.uid ? (
+                <Grid item>
+                  <Button color="inherit" href="/login">
+                    Login
+                  </Button>
+                </Grid>
+              ) : (
+                ""
+              )}
 
-        {/* <Button onClick={() => thunkDispatch(test)}>TEST</Button> */}
+              <Grid item>
+                <Button color="inherit" onClick={() => thunkDispatch(test())}>
+                  TEST()
+                </Button>
+              </Grid>
+              <Grid item></Grid>
+            </Grid>
 
-        {authState.email !== undefined && authState.email !== null ? (
-          <div>Hello, {authState.email ? authState.email : "Guest"}</div>
-        ) : (
-          ""
-        )}
-        <Button color="inherit" onClick={() => thunkDispatch(logout())}>
-          Logout
-        </Button>
-      </Toolbar>
-    </AppBar>
+            {/* <Button onClick={() => thunkDispatch(test)}>TEST</Button> */}
+
+            {authState.email !== undefined && authState.email !== null ? (
+              <div>Hello, {authState.email ? authState.email : "Guest"}</div>
+            ) : (
+              ""
+            )}
+            {authState.uid ? (
+              <Button color="inherit" onClick={() => thunkDispatch(logout())}>
+                Logout
+              </Button>
+            ) : (
+              ""
+            )}
+          </Toolbar>
+        </AppBar>
+      ) : (
+        ""
+      )}
+    </Fragment>
   );
 };
 

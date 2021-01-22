@@ -5,13 +5,14 @@ import {
   LOGIN_FAILURE,
   LOGOUT,
 } from "../actions/types";
+
 import { IAuthPayload, IAuthState } from "../definitions";
 
 const initialState: IAuthState = {
   isAuthenticated: false,
   // false at first, but will change it to true if auth succcess
-  email: "",
-  uid: "",
+  email: undefined,
+  uid: undefined,
   loading: true,
 };
 
