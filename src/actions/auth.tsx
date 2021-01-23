@@ -122,14 +122,64 @@ export const test = () => async (
   // no return statement here, so return nil
 };
 
-// import { Dispatch } from "redux";
-// function test2() {
-//   return function (dispatch: Dispatch) {
-//     return dispatch({ type: REGISTER_FAILURE });
-//   };
-// }
+// // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+// export const signup = (email: string, password: string): AppThunk => async (
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   dispatch
+// ): Promise<void> => {
+//   // the inner function returns void, but this is Async so its a Promise<void> type
 
-// export const test = (): AppThunk => async (dispatch) => {
-//   dispatch({ type: LOGIN_FAILURE });
-//   // console.log(getState());
+//   //https://stackoverflow.com/questions/40389946/how-do-i-set-the-displayname-of-firebase-user/40429080
+//   await firebase
+//     .auth()
+//     .createUserWithEmailAndPassword(email, password)
+//     .then(() => {
+//       // authentication successful if you get here
+//       const currentUser = firebase.auth().currentUser;
+//       const keyUserInformation: IAuthPayload = {
+//         email: currentUser ? currentUser.email : undefined,
+//         uid: currentUser ? currentUser.uid : undefined,
+//         loading: false,
+//       };
+//       dispatch({ type: REGISTER_SUCCESS, payload: keyUserInformation });
+//     })
+//     .catch((error) => {
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//       console.log(errorCode + " " + errorMessage);
+//       dispatch({ type: REGISTER_FAILURE });
+//       dispatch(alertError("email already exists", "error"));
+
+//       // ..
+//     });
+// };
+
+// // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+// export const loadAlreadyLoggedIn = (): AppThunk => async (
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   dispatch
+// ): Promise<void> => {
+//   // recommended way to ensure Auth object complete initialization
+//   // https://firebase.google.com/docs/auth/web/manage-users
+//   await firebase.auth().onAuthStateChanged(function (user) {
+//     if (user) {
+//       const currentUser = firebase.auth().currentUser;
+//       console.log(currentUser);
+//       const keyUserInformation: IAuthPayload = {
+//         email: currentUser ? currentUser.email : undefined,
+//         uid: currentUser ? currentUser.uid : undefined,
+//         loading: false,
+//       };
+//       dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
+//     } else {
+//       // No user is signed in.
+
+//       const keyUserInformation: IAuthPayload = {
+//         email: undefined,
+//         uid: undefined,
+//         loading: false,
+//       };
+//       dispatch({ type: LOGIN_FAILURE, payload: keyUserInformation });
+//     }
+//   });
 // };
