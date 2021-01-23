@@ -27,8 +27,14 @@ export interface IAuthState extends IAuthPayload {
 export interface IAuthPayload {
   email: string | undefined | null;
   uid: string | undefined | null;
+  username: string | undefined | null;
   loading: boolean | undefined;
 }
+
+// each doc in the collection will be named by UID
+// with username
+// profilePicture
+// email
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useThunkDispatch = () =>
@@ -72,12 +78,4 @@ export interface IComment {
   parentCommentLink: string;
   comments?: IComment[];
   upvotes: number;
-}
-
-export interface IUser {
-  email: string;
-  password: string;
-  username: string;
-  picture?: string | undefined;
-  website?: string | undefined;
 }

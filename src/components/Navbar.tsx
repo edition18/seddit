@@ -17,7 +17,7 @@ const Navbar: FunctionComponent = () => {
 
   useEffect(() => {
     thunkDispatch(loadAlreadyLoggedIn());
-  }, []);
+  }, [authState.username]);
 
   return (
     <Fragment>
@@ -53,8 +53,10 @@ const Navbar: FunctionComponent = () => {
               <Grid item></Grid>
             </Grid>
 
-            {authState.email !== undefined && authState.email !== null ? (
-              <div>Hello, {authState.email ? authState.email : "Guest"}</div>
+            {authState.username !== undefined && authState.username !== null ? (
+              <div>
+                Hello, {authState.username ? authState.username : "Guest"}
+              </div>
             ) : (
               ""
             )}

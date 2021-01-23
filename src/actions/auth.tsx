@@ -19,81 +19,150 @@ import { alertError } from "./alerts";
 // }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const signup = (email: string, password: string): AppThunk => async (
+export const signup = (
+  email: string,
+  password: string,
+  username: string
+): AppThunk => async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dispatch
 ): Promise<void> => {
   // the inner function returns void, but this is Async so its a Promise<void> type
 
   //https://stackoverflow.com/questions/40389946/how-do-i-set-the-displayname-of-firebase-user/40429080
-  await firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      // authentication successful if you get here
-      const currentUser = firebase.auth().currentUser;
-      const keyUserInformation: IAuthPayload = {
-        email: currentUser ? currentUser.email : undefined,
-        uid: currentUser ? currentUser.uid : undefined,
-        loading: false,
-      };
-      dispatch({ type: REGISTER_SUCCESS, payload: keyUserInformation });
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode + " " + errorMessage);
-      dispatch({ type: REGISTER_FAILURE });
-      dispatch(alertError("email already exists", "error"));
 
-      // ..
+  //check if username already exists?
+  let userNameExists = false;
+
+  await firebase
+    .firestore()
+    .collection("users")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) =>
+        doc.get("username").toLowerCase() === username.toLowerCase()
+          ? (userNameExists = true)
+          : ""
+      );
     });
+
+  if (userNameExists) {
+    dispatch(
+      alertError("usename already exists, please select another?", "error")
+    );
+    return;
+  } else {
+    //create the auth user
+    await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        // authentication successful if you get here
+        const currentUser = firebase.auth().currentUser;
+        const keyUserInformation: IAuthPayload = {
+          email: currentUser ? currentUser.email : undefined,
+          uid: currentUser ? currentUser.uid : undefined,
+          username: username,
+          loading: false,
+        };
+        //create the account doc in the collection "users"
+        firebase.firestore().collection("users").doc(currentUser?.uid).set({
+          email: currentUser?.email,
+          username: username,
+        });
+
+        dispatch({ type: REGISTER_SUCCESS, payload: keyUserInformation });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode + " " + errorMessage);
+        dispatch({ type: REGISTER_FAILURE });
+        dispatch(alertError("email already exists", "error"));
+
+        // ..
+      });
+  }
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const loadAlreadyLoggedIn = (): AppThunk => async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dispatch
+  dispatch,
+  getState
 ): Promise<void> => {
   // recommended way to ensure Auth object complete initialization
   // https://firebase.google.com/docs/auth/web/manage-users
-  await firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      const currentUser = firebase.auth().currentUser;
-      console.log(currentUser);
-      const keyUserInformation: IAuthPayload = {
-        email: currentUser ? currentUser.email : undefined,
-        uid: currentUser ? currentUser.uid : undefined,
-        loading: false,
-      };
-      dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
-    } else {
-      // No user is signed in.
 
-      const keyUserInformation: IAuthPayload = {
-        email: undefined,
-        uid: undefined,
-        loading: false,
-      };
-      dispatch({ type: LOGIN_FAILURE, payload: keyUserInformation });
-    }
-  });
+  !getState().auth.loading
+    ? ""
+    : await firebase.auth().onAuthStateChanged(async function (user) {
+        if (user) {
+          let username = "";
+          const currentUser = firebase.auth().currentUser;
+          await firebase
+            .firestore()
+            .collection("users")
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) =>
+                doc.get("email").toLowerCase() === currentUser?.email
+                  ? (username = doc.get("username"))
+                  : ""
+              );
+            });
+
+          const keyUserInformation: IAuthPayload = {
+            email: currentUser ? currentUser.email : undefined,
+            uid: currentUser ? currentUser.uid : undefined,
+            username: username,
+            loading: false,
+          };
+          dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
+        } else {
+          // No user is signed in.
+
+          const keyUserInformation: IAuthPayload = {
+            email: undefined,
+            uid: undefined,
+            loading: false,
+            username: undefined,
+          };
+          dispatch({ type: LOGIN_FAILURE, payload: keyUserInformation });
+        }
+      });
 };
 
 export const login = (email: string, password: string): AppThunk => async (
   dispatch
 ): Promise<void> => {
+  let username = "";
+
   await firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then(() => {
+    .then(async () => {
+      await firebase
+        .firestore()
+        .collection("users")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) =>
+            doc.get("email").toLowerCase() === email
+              ? (username = doc.get("username"))
+              : ""
+          );
+        });
+
       const currentUser = firebase.auth().currentUser;
+
       const keyUserInformation: IAuthPayload = {
         email: currentUser ? currentUser.email : undefined,
         uid: currentUser ? currentUser.uid : undefined,
+        username: username,
         loading: false,
       };
-      dispatch({ type: REGISTER_SUCCESS, payload: keyUserInformation });
+      dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
     })
     .catch((error) => {
       const errorCode = error.code;

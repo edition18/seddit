@@ -21,6 +21,7 @@ const Signup: FunctionComponent = () => {
 
   const [formData, setFormData] = useState({
     email: "",
+    username: "",
     password: "",
     passwordConfirm: "",
   });
@@ -36,7 +37,7 @@ const Signup: FunctionComponent = () => {
       return;
     }
 
-    thunkDispatch(signup(formData.email, formData.password));
+    thunkDispatch(signup(formData.email, formData.password, formData.username));
   };
 
   return (
