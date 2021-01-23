@@ -86,3 +86,47 @@ export default Navbar;
 // <button onClick={() => thunkDispatch(test())}>
 // Test the dummyaction
 // </button>
+
+// import firebase from "../config";
+// import { v4 as uuidv4 } from "uuid";
+// const db = firebase.firestore();
+
+// const post1: IPost = {
+//   timeCreated: Date.now(),
+//   postid: uuidv4(),
+//   uid: "53yPOQMea5Sb3L1Nj2NzBNMTdJ53",
+//   community: "memes",
+//   header: "check out this dank meme",
+//   body: "see title",
+// };
+// const post2: IPost = {
+//   timeCreated: Date.now(),
+//   postid: uuidv4(),
+//   uid: "53yPOQMea5Sb3L1Nj2NzBNMTdJ53",
+//   community: "memes",
+//   header: "check out this dank meme, better than the previous!",
+//   body: "see title please",
+// };
+// const post3: IPost = {
+//   timeCreated: Date.now(),
+//   postid: uuidv4(),
+//   uid: "53yPOQMea5Sb3L1Nj2NzBNMTdJ53",
+//   community: "memes",
+//   header: "seriously, its bad",
+//   body: "see title please",
+// };
+
+// const postArray: IPost[] = [post1, post2, post3];
+
+// {
+//   postArray.forEach((post: IPost) => {
+//     db.collection(post.community).add({
+//       timeCreated: post.timeCreated,
+//       uid: post.uid,
+//       community: post.community,
+//       header: post.header,
+//       body: post.body,
+//       thumbnail: post.thumbnail ? post.thumbnail : "",
+//     });
+//   });
+// }

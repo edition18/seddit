@@ -6,5 +6,4 @@ export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const SET_ALERT = "ADD_ALERT";
 export const REMOVE_ALERT = "REMOVE_ALERT";
 export const LOGOUT = "LOGOUT";
-export const LOADED = "LOADED";
-export const LOADING = "LOADING";
+export const RETRIEVE_COMMUNITY_POSTS = "RETRIEVE_COMMUNITY_POSTS";

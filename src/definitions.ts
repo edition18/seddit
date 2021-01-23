@@ -27,15 +27,7 @@ export interface IAuthState extends IAuthPayload {
 export interface IAuthPayload {
   email: string | undefined | null;
   uid: string | undefined | null;
-  loading: boolean;
-}
-
-export interface IAppState {
-  loading: boolean;
-}
-
-export interface IAppPayload {
-  loading: boolean;
+  loading: boolean | undefined;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -47,20 +39,29 @@ export const useThunkDispatch = () =>
 // so inorder to supply the argument to the returned function we need to do useDispatch()(arg)
 // which is how we utilize the hook
 
-export interface IUserPosts {
-  posts: IPost[];
+export interface IPostsState {
+  posts: IPostWithDocId[];
+  loading: boolean;
+}
+export interface IPostsPayload {
+  posts: IPostWithDocId[];
+  loading: boolean;
 }
 
 export interface IPost {
   // general information
-  timeCreated: Date;
-  uid: string; //creator uid?
+  timeCreated: number;
+  uid: string; //unique user id per auth()
   //post specific
   community: string; //subreddit eqv
   thumbnail?: string;
   header: string;
   body: string;
   comments?: IComment[];
+}
+
+export interface IPostWithDocId extends IPost {
+  docId: string;
 }
 
 export interface IComment {

@@ -2,7 +2,6 @@ import React, { FunctionComponent, Fragment } from "react";
 import { IPost } from "../definitions";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-// import firebase from "../config";
 
 // uid for test account: 53yPOQMea5Sb3L1Nj2NzBNMTdJ53
 
@@ -13,6 +12,8 @@ type PostProps = {
 const Post: FunctionComponent<PostProps> = ({
   post: { timeCreated, thumbnail, header, body },
 }) => {
+  // store posts by collections of communities
+
   return (
     <Fragment>
       <Grid
@@ -36,21 +37,21 @@ export default Post;
 //   const db = firebase.firestore();
 
 //   const post1: IPost = {
-//     timeCreated: new Date(),
+//     timeCreated: Date.now(),
 //     uid: "53yPOQMea5Sb3L1Nj2NzBNMTdJ53",
 //     community: "memes",
 //     header: "check out this dank meme",
 //     body: "see title",
 //   };
 //   const post2: IPost = {
-//     timeCreated: new Date(),
+//     timeCreated: Date.now(),
 //     uid: "53yPOQMea5Sb3L1Nj2NzBNMTdJ53",
 //     community: "memes",
 //     header: "check out this dank meme, better than the previous!",
 //     body: "see title please",
 //   };
 //   const post3: IPost = {
-//     timeCreated: new Date(),
+//     timeCreated: Date.now(),
 //     uid: "53yPOQMea5Sb3L1Nj2NzBNMTdJ53",
 //     community: "memes",
 //     header: "seriously, its bad",

@@ -29,20 +29,20 @@ export default function (
         isAuthenticated: true,
         email: action.payload?.email,
         uid: action.payload?.uid,
-        loading: false,
+        loading: action.payload?.loading,
       };
     case LOGIN_FAILURE:
     case REGISTER_FAILURE:
       return {
         ...state,
         isAuthenticated: false,
-        loading: false,
+        loading: action.payload?.loading,
       };
     case LOGOUT:
       return {
         ...state,
         isAuthenticated: false,
-        loading: false,
+        loading: action.payload?.loading,
         email: undefined,
         uid: undefined,
       };

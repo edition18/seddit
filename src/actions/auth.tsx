@@ -10,7 +10,6 @@ import {
 } from "./types";
 import { alertError } from "../actions/alerts";
 import { IAuthPayload, IActionCreator, AppThunk } from "../definitions";
-// import { ThunkAction } from "redux-thunk";
 
 // normal action type
 // interface AuthAction extends Action {
@@ -24,7 +23,7 @@ export const signup = (email: string, password: string): AppThunk => async (
   dispatch
 ): Promise<void> => {
   // the inner function returns void, but this is Async so its a Promise<void> type
-  firebase
+  await firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(() => {
@@ -55,7 +54,7 @@ export const loadAlreadyLoggedIn = (): AppThunk => async (
 ): Promise<void> => {
   // recommended way to ensure Auth object complete initialization
   // https://firebase.google.com/docs/auth/web/manage-users
-  firebase.auth().onAuthStateChanged(function (user) {
+  await firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       const currentUser = firebase.auth().currentUser;
 
@@ -81,7 +80,7 @@ export const loadAlreadyLoggedIn = (): AppThunk => async (
 export const login = (email: string, password: string): AppThunk => async (
   dispatch
 ): Promise<void> => {
-  firebase
+  await firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(() => {
