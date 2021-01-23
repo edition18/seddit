@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { useThunkDispatch, RootState } from "../definitions";
-import { loadAlreadyLoggedIn, test, logout } from "../actions/auth";
+import { loadAlreadyLoggedIn, logout } from "../actions/auth";
 import { useSelector } from "react-redux";
 
 const Navbar: FunctionComponent = () => {
@@ -46,14 +46,12 @@ const Navbar: FunctionComponent = () => {
               )}
 
               <Grid item>
-                <Button color="inherit" onClick={() => thunkDispatch(test())}>
-                  TEST()
+                <Button color="inherit" href="/community/memes">
+                  community: memes
                 </Button>
               </Grid>
               <Grid item></Grid>
             </Grid>
-
-            {/* <Button onClick={() => thunkDispatch(test)}>TEST</Button> */}
 
             {authState.email !== undefined && authState.email !== null ? (
               <div>Hello, {authState.email ? authState.email : "Guest"}</div>

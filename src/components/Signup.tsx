@@ -19,8 +19,6 @@ const Signup: FunctionComponent = () => {
 
   const classes = useStyles();
 
-  // const [email, setEmail] = useState(String);
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -34,7 +32,7 @@ const Signup: FunctionComponent = () => {
   // event: React.MouseEvent<HTMLButtonElement>
   const onSubmit = async () => {
     if (formData.password !== formData.passwordConfirm) {
-      alertError("Check Password!", "error");
+      thunkDispatch(alertError("Check Password!", "error"));
       return;
     }
 
@@ -64,6 +62,21 @@ const Signup: FunctionComponent = () => {
                 id="email"
                 label={
                   authState.isAuthenticated ? "Already Logged In" : "email"
+                }
+                variant="outlined"
+              />
+            </Grid>
+          </Grid>
+          <Grid container className={classes.subcontainer}>
+            <Grid item xs={12} className={classes.centerGridItem}>
+              <TextField
+                disabled={authState.isAuthenticated}
+                name="username"
+                onChange={onChange}
+                className={classes.textFields}
+                id="username"
+                label={
+                  authState.isAuthenticated ? "Already Logged In" : "username"
                 }
                 variant="outlined"
               />

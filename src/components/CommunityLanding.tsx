@@ -7,6 +7,10 @@ import { match } from "react-router";
 import { useSelector } from "react-redux";
 import { RootState, useThunkDispatch } from "../definitions";
 import { retrievePostsByCommunity } from "../actions/posts";
+import { v4 as uuidv4 } from "uuid";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Typography from "@material-ui/core/Typography";
+import "fontsource-roboto";
 
 interface CommunityLandingProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -31,11 +35,11 @@ const CommunityLanding: FunctionComponent<CommunityLandingProps> = ({
 
   return (
     <Fragment>
-      {console.log(postsState)}
-      {postsState.posts.length ? (
-        postsState.posts.map((post) => <Post post={post}></Post>)
+      <Typography variant="h2">Welcome to {match.params.community}</Typography>
+      {!postsState.loading ? (
+        postsState.posts.map((post) => <Post key={uuidv4()} post={post}></Post>)
       ) : (
-        <div>Looking pretty dead here</div>
+        <CircularProgress />
       )}
     </Fragment>
   );

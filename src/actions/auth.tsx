@@ -8,8 +8,9 @@ import {
   LOGIN_FAILURE,
   LOGOUT,
 } from "./types";
-import { alertError } from "../actions/alerts";
+
 import { IAuthPayload, IActionCreator, AppThunk } from "../definitions";
+import { alertError } from "./alerts";
 
 // normal action type
 // interface AuthAction extends Action {
@@ -23,6 +24,8 @@ export const signup = (email: string, password: string): AppThunk => async (
   dispatch
 ): Promise<void> => {
   // the inner function returns void, but this is Async so its a Promise<void> type
+
+  //https://stackoverflow.com/questions/40389946/how-do-i-set-the-displayname-of-firebase-user/40429080
   await firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
@@ -57,7 +60,7 @@ export const loadAlreadyLoggedIn = (): AppThunk => async (
   await firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       const currentUser = firebase.auth().currentUser;
-
+      console.log(currentUser);
       const keyUserInformation: IAuthPayload = {
         email: currentUser ? currentUser.email : undefined,
         uid: currentUser ? currentUser.uid : undefined,
