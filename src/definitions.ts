@@ -73,3 +73,11 @@ export interface IComment {
   comments?: IComment[];
   upvotes: number;
 }
+
+export interface IUser {
+  email: string;
+  password: string;
+  username: string;
+  picture?: string | undefined;
+  website?: string | undefined;
+}
