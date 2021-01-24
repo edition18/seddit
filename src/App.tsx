@@ -3,7 +3,8 @@ import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
-import Post from "./components/Post";
+import Test from "./components/Test";
+import PostCreate from "./components/Post/PostCreate";
 import CommunityLanding from "./components/CommunityLanding";
 import { ThemeProvider } from "@material-ui/core/styles";
 import "./styles/App.css";
@@ -20,17 +21,22 @@ const App: FunctionComponent = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Navbar />
         <Router>
+          <Navbar />
           <Switch>
             <Route path="/" exact component={Landing}></Route>
             <Route path="/signup" exact component={Signup}></Route>
             <Route path="/login" exact component={Login}></Route>
-            <Route path="/test" exact component={Post}></Route>
+            <Route path="/test" exact component={Test}></Route>
             <Route
               exact
               path="/community/:community"
               component={CommunityLanding}
+            />
+            <Route
+              exact
+              path="/community/:community/createpost"
+              component={PostCreate}
             />
           </Switch>
         </Router>

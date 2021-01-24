@@ -94,9 +94,10 @@ export const loadAlreadyLoggedIn = (): AppThunk => async (
   // recommended way to ensure Auth object complete initialization
   // https://firebase.google.com/docs/auth/web/manage-users
 
-  !getState().auth.loading
+  getState().auth.isAuthenticated
     ? ""
     : await firebase.auth().onAuthStateChanged(async function (user) {
+        console.log(user);
         if (user) {
           let username = "";
           const currentUser = firebase.auth().currentUser;

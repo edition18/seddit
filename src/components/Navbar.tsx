@@ -9,6 +9,8 @@ import Grid from "@material-ui/core/Grid";
 import { useThunkDispatch, RootState } from "../definitions";
 import { loadAlreadyLoggedIn, logout } from "../actions/auth";
 import { useSelector } from "react-redux";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Link } from "react-router-dom";
 
 const Navbar: FunctionComponent = () => {
   const thunkDispatch = useThunkDispatch();
@@ -21,23 +23,24 @@ const Navbar: FunctionComponent = () => {
 
   return (
     <Fragment>
-      {!authState.loading ? (
-        <AppBar position="static" color="primary">
-          <Toolbar>
-            <IconButton edge="start" color="inherit" aria-label="menu">
-              <RecordVoiceOverIcon />
-            </IconButton>
-            <Typography variant="h6">Seddit</Typography>
+      <AppBar position="static" color="primary">
+        <Toolbar>
+          <IconButton edge="start" color="inherit" aria-label="menu">
+            <RecordVoiceOverIcon />
+          </IconButton>
+
+          <Typography variant="h6">Seddit</Typography>
+          {!authState.loading ? (
             <Grid container>
               <Grid item>
-                <Button color="inherit" href="/signup">
+                <Button component={Link} to="/signup" color="inherit">
                   Signup
                 </Button>
               </Grid>
 
               {!authState.uid ? (
                 <Grid item>
-                  <Button color="inherit" href="/login">
+                  <Button to="/login" component={Link} color="inherit">
                     Login
                   </Button>
                 </Grid>
@@ -46,32 +49,32 @@ const Navbar: FunctionComponent = () => {
               )}
 
               <Grid item>
-                <Button color="inherit" href="/community/memes">
+                <Button color="inherit" component={Link} to="/community/memes">
                   community: memes
                 </Button>
               </Grid>
               <Grid item></Grid>
             </Grid>
+          ) : (
+            ""
+          )}
 
-            {authState.username !== undefined && authState.username !== null ? (
-              <div>
-                Hello, {authState.username ? authState.username : "Guest"}
-              </div>
-            ) : (
-              ""
-            )}
-            {authState.uid ? (
-              <Button color="inherit" onClick={() => thunkDispatch(logout())}>
-                Logout
-              </Button>
-            ) : (
-              ""
-            )}
-          </Toolbar>
-        </AppBar>
-      ) : (
-        ""
-      )}
+          {authState.username !== undefined && authState.username !== null ? (
+            <div>
+              Hello, {authState.username ? authState.username : "Guest"}
+            </div>
+          ) : (
+            ""
+          )}
+          {!authState.loading ? (
+            <Button color="inherit" onClick={() => thunkDispatch(logout())}>
+              Logout
+            </Button>
+          ) : (
+            <CircularProgress />
+          )}
+        </Toolbar>
+      </AppBar>
     </Fragment>
   );
 };
