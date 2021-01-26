@@ -1,4 +1,5 @@
 import React, { useEffect, FunctionComponent, Fragment } from "react";
+import DialogTest from "./DialogTest";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -11,8 +12,14 @@ import { loadAlreadyLoggedIn, logout } from "../actions/auth";
 import { useSelector } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Navbar: FunctionComponent = () => {
+  const [signup, showSignup] = useState(false);
+
+  const toggleSignup = () => {
+    signup ? showSignup(false) : showSignup(true);
+  };
   const thunkDispatch = useThunkDispatch();
 
   const authState = useSelector((state: RootState) => state.auth);
@@ -58,7 +65,15 @@ const Navbar: FunctionComponent = () => {
           ) : (
             ""
           )}
-
+          <Button
+            color="inherit"
+            onClick={() => {
+              toggleSignup();
+            }}
+          >
+            New Signup Test
+          </Button>
+          {signup ? <DialogTest toggleSignup={toggleSignup} /> : ""}
           {authState.username !== undefined && authState.username !== null ? (
             <div>
               Hello, {authState.username ? authState.username : "Guest"}

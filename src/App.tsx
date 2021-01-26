@@ -12,6 +12,7 @@ import theme from "./styles/theme";
 import "fontsource-roboto";
 import { Provider } from "react-redux";
 import { store } from "./store";
+// import MasterSidebar from "./components/Sidebar/MasterSidebar";
 // import { AccessAlarm, ThreeDRotation } from "@material-ui/icons";
 // import firebase from "./config";
 
@@ -23,11 +24,10 @@ const App: FunctionComponent = () => {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Router>
-          <Navbar />
-
-          <Grid container>
-            <Grid item xs={9}>
-              <Switch>
+          <Switch>
+            <Navbar />
+            <Grid container>
+              <Grid item xs={9}>
                 <Route path="/" exact component={Landing}></Route>
                 <Route path="/signup" exact component={Signup}></Route>
                 <Route path="/login" exact component={Login}></Route>
@@ -42,14 +42,12 @@ const App: FunctionComponent = () => {
                   path="/community/:community/createpost"
                   component={PostCreate}
                 />
-              </Switch>
-            </Grid>
-            <Grid item xs={3}>
-              <Grid container>
-                <Grid item xs={12}></Grid>
+              </Grid>
+              <Grid item xs={3}>
+                {/* <MasterSidebar /> */}
               </Grid>
             </Grid>
-          </Grid>
+          </Switch>
         </Router>
       </ThemeProvider>
     </Provider>
