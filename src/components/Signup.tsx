@@ -54,7 +54,7 @@ const Signup: FunctionComponent = () => {
         <Grid container className={classes.container}>
           {/* adds more padding w/ this subcontainer*/}
           <Grid container className={classes.subcontainer}>
-            <Grid item xs={12} className={classes.centerGridItem}>
+            <Grid item xs={12} className={classes.centerChildElements}>
               <TextField
                 disabled={authState.isAuthenticated}
                 name="email"
@@ -69,7 +69,7 @@ const Signup: FunctionComponent = () => {
             </Grid>
           </Grid>
           <Grid container className={classes.subcontainer}>
-            <Grid item xs={12} className={classes.centerGridItem}>
+            <Grid item xs={12} className={classes.centerChildElements}>
               <TextField
                 disabled={authState.isAuthenticated}
                 name="username"
@@ -84,7 +84,7 @@ const Signup: FunctionComponent = () => {
             </Grid>
           </Grid>
           <Grid container className={classes.subcontainer}>
-            <Grid item xs={12} className={classes.centerGridItem}>
+            <Grid item xs={12} className={classes.centerChildElements}>
               <TextField
                 disabled={authState.isAuthenticated}
                 name="password"
@@ -99,7 +99,7 @@ const Signup: FunctionComponent = () => {
             </Grid>
           </Grid>
           <Grid container className={classes.subcontainer}>
-            <Grid item xs={12} className={classes.centerGridItem}>
+            <Grid item xs={12} className={classes.centerChildElements}>
               <TextField
                 disabled={authState.isAuthenticated}
                 name="passwordConfirm"

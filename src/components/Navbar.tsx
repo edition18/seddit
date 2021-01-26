@@ -66,7 +66,7 @@ const Navbar: FunctionComponent = () => {
           ) : (
             ""
           )}
-          {!authState.loading ? (
+          {authState.isAuthenticated ? (
             <Button color="inherit" onClick={() => thunkDispatch(logout())}>
               Logout
             </Button>

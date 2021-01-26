@@ -57,7 +57,7 @@ const CommunityLanding: FunctionComponent<CommunityLandingProps> = ({
           {authState.isAuthenticated ? (
             <Grid container>
               <div>test</div>
-              <Grid item xs={12} className={classes.centerGridItem}>
+              <Grid item xs={12} className={classes.centerChildElements}>
                 <Button
                   fullWidth
                   component={Link}

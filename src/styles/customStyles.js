@@ -17,8 +17,10 @@ const useStyles = makeStyles(() => ({
   marginAutoItem: {
     margin: "auto",
   },
-  centerGridItem: {
-    textAlign: "center",
+  centerChildElements: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   disabledButton: {
     backgroundColor: theme.palette.secondary.dark,

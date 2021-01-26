@@ -1,3 +1,5 @@
+import { Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React, { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../definitions";
@@ -6,13 +8,17 @@ const PostCreate: FunctionComponent = () => {
   const authState = useSelector((state: RootState) => state.auth);
 
   return (
-    <div>
+    <Grid>
       {authState.isAuthenticated ? (
-        <div>You are authenticated!</div>
+        <Typography variant="h3" align="center">
+          You are authenticated!
+        </Typography>
       ) : (
-        <div>You are not authenticated!</div>
+        <Typography variant="h3" align="center">
+          You are not authenticated!
+        </Typography>
       )}
-    </div>
+    </Grid>
   );
 };
 
