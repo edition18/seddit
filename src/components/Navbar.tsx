@@ -10,7 +10,6 @@ import Grid from "@material-ui/core/Grid";
 import { useThunkDispatch, RootState } from "../definitions";
 import { loadAlreadyLoggedIn, logout } from "../actions/auth";
 import { useSelector } from "react-redux";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -39,12 +38,6 @@ const Navbar: FunctionComponent = () => {
           <Typography variant="h6">Seddit</Typography>
           {!authState.loading ? (
             <Grid container>
-              <Grid item>
-                <Button component={Link} to="/signup" color="inherit">
-                  Signup
-                </Button>
-              </Grid>
-
               {!authState.uid ? (
                 <Grid item>
                   <Button to="/login" component={Link} color="inherit">
@@ -70,13 +63,14 @@ const Navbar: FunctionComponent = () => {
             onClick={() => {
               toggleSignup();
             }}
+            style={{ color: "red" }}
           >
             New Signup Test
           </Button>
           {signup ? <DialogTest toggleSignup={toggleSignup} /> : ""}
-          {authState.username !== undefined && authState.username !== null ? (
+          {!authState.loading ? (
             <div>
-              Hello, {authState.username ? authState.username : "Guest"}
+              Hello, {authState.isAuthenticated ? authState.username : "Guest"}
             </div>
           ) : (
             ""
@@ -86,7 +80,9 @@ const Navbar: FunctionComponent = () => {
               Logout
             </Button>
           ) : (
-            <CircularProgress />
+            <Button component={Link} to="/signup" color="inherit">
+              Signup
+            </Button>
           )}
         </Toolbar>
       </AppBar>
