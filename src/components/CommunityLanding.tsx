@@ -39,7 +39,7 @@ const CommunityLanding: FunctionComponent<CommunityLandingProps> = ({
   const authState = useSelector((state: RootState) => state.auth);
   return (
     <Fragment>
-      <Typography variant="h2" align="center">
+      <Typography variant="h2" className={classes.centerText}>
         Welcome to {match.params.community}
       </Typography>
       <Grid container>

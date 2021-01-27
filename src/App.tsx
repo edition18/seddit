@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from "react";
 import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
-import Login from "./components/Login";
 import Test from "./components/Test";
 import PostCreate from "./components/Post/PostCreate";
 import CommunityLanding from "./components/CommunityLanding";
@@ -23,12 +22,12 @@ const App: FunctionComponent = () => {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Router>
-          <Switch>
-            <Navbar />
-            <Grid container>
-              <Grid item xs={9}>
+          <Navbar />
+          <Grid container>
+            <Grid item xs={9}>
+              <Switch>
+                {/* the switch needs to be direct parent of route */}
                 <Route path="/" exact component={Landing}></Route>
-                <Route path="/login" exact component={Login}></Route>
                 <Route path="/test" exact component={Test}></Route>
                 <Route
                   exact
@@ -40,12 +39,12 @@ const App: FunctionComponent = () => {
                   path="/community/:community/createpost"
                   component={PostCreate}
                 />
-              </Grid>
-              <Grid item xs={3}>
-                {/* <MasterSidebar /> */}
-              </Grid>
+                <Grid item xs={3}>
+                  {/* <MasterSidebar /> */}
+                </Grid>
+              </Switch>
             </Grid>
-          </Switch>
+          </Grid>
         </Router>
       </ThemeProvider>
     </Provider>

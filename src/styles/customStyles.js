@@ -12,6 +12,7 @@ const useStyles = makeStyles(() => ({
     // padding: "0 30px",
   },
   textFields: { color: theme.palette.primary.dark },
+  centerText: { textAlign: "center" },
   container: { padding: 9 },
   subcontainer: { padding: 6 },
   marginAutoItem: {

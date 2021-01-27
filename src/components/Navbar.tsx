@@ -69,16 +69,7 @@ const Navbar: FunctionComponent = () => {
           ) : (
             ""
           )}
-          <Button
-            color="inherit"
-            onClick={() => {
-              toggleSignup();
-            }}
-            style={{ color: "red" }}
-          >
-            New Signup Test
-          </Button>
-          {signup ? <Signup toggleSignup={toggleSignup} /> : ""}
+
           {!authState.loading ? (
             <div>
               Hello, {authState.isAuthenticated ? authState.username : "Guest"}
@@ -91,10 +82,17 @@ const Navbar: FunctionComponent = () => {
               Logout
             </Button>
           ) : (
-            <Button component={Link} to="/signup" color="inherit">
-              Signup
+            <Button
+              color="inherit"
+              onClick={() => {
+                toggleSignup();
+              }}
+              style={{ color: "red" }}
+            >
+              New Signup Test
             </Button>
           )}
+          {signup ? <Signup toggleSignup={toggleSignup} /> : ""}
         </Toolbar>
       </AppBar>
     </Fragment>

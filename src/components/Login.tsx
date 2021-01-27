@@ -95,7 +95,11 @@ const Login: FunctionComponent<LoginProps> = ({ toggleLogin }) => {
                 </Grid>
               </Grid>
             </Grid>
-            <Button disabled={authState.isAuthenticated} onClick={onSubmit}>
+            <Button
+              disabled={authState.isAuthenticated}
+              fullWidth
+              onClick={onSubmit}
+            >
               Login
             </Button>
           </form>
