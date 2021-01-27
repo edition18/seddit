@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from "react";
 import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
-import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Test from "./components/Test";
 import PostCreate from "./components/Post/PostCreate";
@@ -29,7 +28,6 @@ const App: FunctionComponent = () => {
             <Grid container>
               <Grid item xs={9}>
                 <Route path="/" exact component={Landing}></Route>
-                <Route path="/signup" exact component={Signup}></Route>
                 <Route path="/login" exact component={Login}></Route>
                 <Route path="/test" exact component={Test}></Route>
                 <Route

@@ -1,5 +1,6 @@
 import React, { useEffect, FunctionComponent, Fragment } from "react";
-import DialogTest from "./DialogTest";
+import Signup from "./Signup";
+import Login from "./Login";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -15,9 +16,13 @@ import { useState } from "react";
 
 const Navbar: FunctionComponent = () => {
   const [signup, showSignup] = useState(false);
+  const [login, showLogin] = useState(false);
 
   const toggleSignup = () => {
     signup ? showSignup(false) : showSignup(true);
+  };
+  const toggleLogin = () => {
+    login ? showLogin(false) : showLogin(true);
   };
   const thunkDispatch = useThunkDispatch();
 
@@ -40,13 +45,19 @@ const Navbar: FunctionComponent = () => {
             <Grid container>
               {!authState.uid ? (
                 <Grid item>
-                  <Button to="/login" component={Link} color="inherit">
+                  <Button
+                    onClick={() => {
+                      toggleLogin();
+                    }}
+                    color="inherit"
+                  >
                     Login
                   </Button>
                 </Grid>
               ) : (
                 ""
               )}
+              {login ? <Login toggleLogin={toggleLogin} /> : ""}
 
               <Grid item>
                 <Button color="inherit" component={Link} to="/community/memes">
@@ -67,7 +78,7 @@ const Navbar: FunctionComponent = () => {
           >
             New Signup Test
           </Button>
-          {signup ? <DialogTest toggleSignup={toggleSignup} /> : ""}
+          {signup ? <Signup toggleSignup={toggleSignup} /> : ""}
           {!authState.loading ? (
             <div>
               Hello, {authState.isAuthenticated ? authState.username : "Guest"}
