@@ -20,12 +20,13 @@ interface SignupProps {
 }
 
 const Signup: FunctionComponent<SignupProps> = ({ toggleSignup }) => {
+  const authState = useSelector((state: RootState) => state.auth);
+  const alertsState = useSelector((state: RootState) => state.alerts);
+
   const handleClose = () => {
     toggleSignup();
   };
   const thunkDispatch = useThunkDispatch();
-  const authState = useSelector((state: RootState) => state.auth);
-  const alertsState = useSelector((state: RootState) => state.alerts);
 
   const classes = useStyles();
 

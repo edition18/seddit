@@ -15,7 +15,6 @@ import { store } from "./store";
 // import firebase from "./config";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
 
 const App: FunctionComponent = () => {
   return (
@@ -23,28 +22,21 @@ const App: FunctionComponent = () => {
       <ThemeProvider theme={theme}>
         <Router>
           <Navbar />
-          <Grid container>
-            <Grid item xs={9}>
-              <Switch>
-                {/* the switch needs to be direct parent of route */}
-                <Route path="/" exact component={Landing}></Route>
-                <Route path="/test" exact component={Test}></Route>
-                <Route
-                  exact
-                  path="/community/:community"
-                  component={CommunityLanding}
-                />
-                <Route
-                  exact
-                  path="/community/:community/createpost"
-                  component={PostCreate}
-                />
-                <Grid item xs={3}>
-                  {/* <MasterSidebar /> */}
-                </Grid>
-              </Switch>
-            </Grid>
-          </Grid>
+          <Switch>
+            {/* the switch needs to be direct parent of route */}
+            <Route path="/" exact component={Landing}></Route>
+            <Route path="/test" exact component={Test}></Route>
+            <Route
+              exact
+              path="/community/:community"
+              component={CommunityLanding}
+            />
+            <Route
+              exact
+              path="/community/:community/createpost"
+              component={PostCreate}
+            />
+          </Switch>
         </Router>
       </ThemeProvider>
     </Provider>

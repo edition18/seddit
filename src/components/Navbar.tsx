@@ -15,8 +15,16 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 const Navbar: FunctionComponent = () => {
+  const authState = useSelector((state: RootState) => state.auth);
   const [signup, showSignup] = useState(false);
   const [login, showLogin] = useState(false);
+
+  useEffect(() => {
+    if (authState.isAuthenticated) {
+      showSignup(false);
+      showLogin(false);
+    }
+  }, [authState.isAuthenticated]);
 
   const toggleSignup = () => {
     signup ? showSignup(false) : showSignup(true);
@@ -25,8 +33,6 @@ const Navbar: FunctionComponent = () => {
     login ? showLogin(false) : showLogin(true);
   };
   const thunkDispatch = useThunkDispatch();
-
-  const authState = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     thunkDispatch(loadAlreadyLoggedIn());
@@ -87,9 +93,8 @@ const Navbar: FunctionComponent = () => {
               onClick={() => {
                 toggleSignup();
               }}
-              style={{ color: "red" }}
             >
-              New Signup Test
+              Signup
             </Button>
           )}
           {signup ? <Signup toggleSignup={toggleSignup} /> : ""}

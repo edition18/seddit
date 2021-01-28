@@ -11,11 +11,11 @@ import { v4 as uuidv4 } from "uuid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import "fontsource-roboto";
 import useStyles from "../styles/customStyles";
+import Test from "./Test";
 
-import { Link } from "react-router-dom";
+import CommunitySidebar from "./Sidebar/CommunitySidebar";
 interface CommunityLandingProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   match: matchOverwrite;
@@ -53,22 +53,14 @@ const CommunityLanding: FunctionComponent<CommunityLandingProps> = ({
           )}
         </Grid>
         <Grid item xs={3}>
-          Sidebar
           {authState.isAuthenticated ? (
-            <Grid container>
-              <div>test</div>
-              <Grid item xs={12} className={classes.centerChildElements}>
-                <Button
-                  fullWidth
-                  component={Link}
-                  to={"/community/" + match.params.community + "/createpost"}
-                >
-                  <strong>Create a Post</strong>
-                </Button>
-              </Grid>
-            </Grid>
+            <CommunitySidebar
+              createPostLink={
+                "/community/" + match.params.community + "/createpost"
+              }
+            />
           ) : (
-            ""
+            <Test />
           )}
         </Grid>
       </Grid>
