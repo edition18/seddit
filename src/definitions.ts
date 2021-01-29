@@ -56,26 +56,21 @@ export interface IPostsPayload {
 
 export interface IPost {
   // general information
-  timeCreated: number;
-  uid: string; //unique user id per auth()
+  datetime?: number;
+  lastEditDateTime?: number;
+  uid?: string; //unique user id per auth()
   //post specific
-  community: string; //subreddit eqv
-  thumbnail?: string;
-  header: string;
+  pid?: string; //postid
+  community?: string; //subreddit eqv
+  thumbnail?: string; //image or video
+  title: string;
   body: string;
-  comments?: IComment[];
+  comments?: IPost[];
+  nsfw: boolean;
+  upvotes?: number;
+  downvotes?: number;
 }
 
 export interface IPostWithDocId extends IPost {
   docId: string;
-}
-
-export interface IComment {
-  // general information
-  timeCreated: Date;
-  author: string;
-  //post specific
-  parentCommentLink: string;
-  comments?: IComment[];
-  upvotes: number;
 }

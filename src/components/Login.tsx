@@ -62,7 +62,7 @@ const Login: FunctionComponent<LoginProps> = ({ toggleLogin }) => {
           <form noValidate autoComplete="off">
             <Grid container className={classes.container}>
               {/* adds more padding w/ this subcontainer*/}
-              <Grid container className={classes.subcontainer}>
+              <Grid container>
                 <Grid item xs={12} className={classes.centerChildElements}>
                   <TextField
                     disabled={authState.isAuthenticated}
@@ -77,7 +77,7 @@ const Login: FunctionComponent<LoginProps> = ({ toggleLogin }) => {
                   />
                 </Grid>
               </Grid>
-              <Grid container className={classes.subcontainer}>
+              <Grid container>
                 <Grid item xs={12} className={classes.centerChildElements}>
                   <TextField
                     disabled={authState.isAuthenticated}

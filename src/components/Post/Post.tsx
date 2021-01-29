@@ -10,7 +10,7 @@ type PostProps = {
 };
 
 const Post: FunctionComponent<PostProps> = ({
-  post: { timeCreated, thumbnail, header, body },
+  post: { datetime, thumbnail, title, body },
 }) => {
   // store posts by collections of communities
 
@@ -22,9 +22,9 @@ const Post: FunctionComponent<PostProps> = ({
         justify="space-evenly"
         alignItems="stretch"
       >
-        <Typography>{timeCreated}</Typography>
+        <Typography>{datetime}</Typography>
         <Typography>{thumbnail && thumbnail}</Typography>
-        <Typography>{header}</Typography>
+        <Typography>{title}</Typography>
         <Typography>{body}</Typography>
       </Grid>
     </Fragment>
@@ -37,24 +37,24 @@ export default Post;
 //   const db = firebase.firestore();
 
 //   const post1: IPost = {
-//     timeCreated: Date.now(),
+//     datetime: Date.now(),
 //     uid: "53yPOQMea5Sb3L1Nj2NzBNMTdJ53",
 //     community: "memes",
-//     header: "check out this dank meme",
+//     title: "check out this dank meme",
 //     body: "see title",
 //   };
 //   const post2: IPost = {
-//     timeCreated: Date.now(),
+//     datetime: Date.now(),
 //     uid: "53yPOQMea5Sb3L1Nj2NzBNMTdJ53",
 //     community: "memes",
-//     header: "check out this dank meme, better than the previous!",
+//     title: "check out this dank meme, better than the previous!",
 //     body: "see title please",
 //   };
 //   const post3: IPost = {
-//     timeCreated: Date.now(),
+//     datetime: Date.now(),
 //     uid: "53yPOQMea5Sb3L1Nj2NzBNMTdJ53",
 //     community: "memes",
-//     header: "seriously, its bad",
+//     title: "seriously, its bad",
 //     body: "see title please",
 //   };
 
@@ -62,10 +62,10 @@ export default Post;
 
 // {postArray.forEach((post: IPost) => {
 //   db.collection(post.community).add({
-//     timeCreated: post.timeCreated,
+//     datetime: post.timeCreated,
 //     uid: post.uid,
 //     community: post.community,
-//     header: post.header,
+//     title: post.title,
 //     body: post.body,
 //     thumbnail: post.thumbnail ? post.thumbnail : "",
 //   });

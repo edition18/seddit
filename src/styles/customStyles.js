@@ -14,7 +14,6 @@ const useStyles = makeStyles(() => ({
   textFields: { color: theme.palette.primary.dark },
   centerText: { textAlign: "center" },
   container: { padding: 9 },
-  subcontainer: { padding: 6 },
   marginAutoItem: {
     margin: "auto",
   },
@@ -22,6 +21,9 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+  alignLeftChildElementsAsBlock: {
+    display: "block",
   },
   disabledButton: {
     backgroundColor: theme.palette.secondary.dark,
