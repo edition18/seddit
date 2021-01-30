@@ -25,10 +25,17 @@ export interface IAuthState extends IAuthPayload {
 }
 
 export interface IAuthPayload {
-  email: string | undefined | null;
-  uid: string | undefined | null;
-  username: string | undefined | null;
-  loading: boolean | undefined;
+  email?: string | undefined | null;
+  uid?: string | undefined | null;
+  username?: string | undefined | null;
+  loading?: boolean | undefined;
+  subscribed?: string[];
+  moderating?: IModeratorInformation[];
+}
+
+export interface IModeratorInformation {
+  community: string;
+  level: number;
 }
 
 // each doc in the collection will be named by UID
@@ -54,7 +61,14 @@ export interface IPostsPayload {
   loading: boolean;
 }
 
-export interface IPost {
+export interface IPost extends IComment {
+  thumbnail: string; //image or video
+  title: string;
+  body: string;
+  nsfw: boolean;
+}
+
+export interface IComment {
   // general information
   datetime?: number;
   lastEditDateTime?: number;
@@ -62,11 +76,8 @@ export interface IPost {
   //post specific
   pid?: string; //postid
   community?: string; //subreddit eqv
-  thumbnail?: string; //image or video
-  title: string;
   body: string;
-  comments?: IPost[];
-  nsfw: boolean;
+  comments?: IComment[];
   upvotes?: number;
   downvotes?: number;
 }

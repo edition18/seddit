@@ -58,6 +58,7 @@ const CommunityLanding: FunctionComponent<CommunityLandingProps> = ({
               createPostLink={
                 "/community/" + match.params.community + "/createpost"
               }
+              community={match.params.community}
             />
           ) : (
             <Test />

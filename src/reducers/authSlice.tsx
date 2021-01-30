@@ -4,6 +4,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
+  SUBSCRIBE_UPDATE,
 } from "../actions/types";
 
 import { IAuthPayload, IAuthState } from "../definitions";
@@ -15,6 +16,7 @@ const initialState: IAuthState = {
   uid: undefined,
   loading: true,
   username: undefined,
+  subscribed: [] as string[],
 };
 
 export default function (
@@ -32,6 +34,7 @@ export default function (
         uid: action.payload?.uid,
         loading: action.payload?.loading,
         username: action.payload?.username,
+        subscribed: action.payload?.subscribed,
       };
     case LOGIN_FAILURE:
     case REGISTER_FAILURE:
@@ -48,6 +51,12 @@ export default function (
         email: undefined,
         uid: undefined,
         username: undefined,
+        subscribed: [],
+      };
+    case SUBSCRIBE_UPDATE:
+      return {
+        ...state,
+        subscribed: action.payload?.subscribed,
       };
     default:
       return state;

@@ -7,6 +7,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
+  SUBSCRIBE_UPDATE,
 } from "./types";
 
 import { IAuthPayload, IActionCreator, AppThunk } from "../definitions";
@@ -69,6 +70,7 @@ export const signup = (
         firebase.firestore().collection("users").doc(currentUser?.uid).set({
           email: currentUser?.email,
           username: username,
+          subscribed: [],
         });
 
         dispatch({ type: REGISTER_SUCCESS, payload: keyUserInformation });
@@ -93,36 +95,34 @@ export const loadAlreadyLoggedIn = (): AppThunk => async (
 ): Promise<void> => {
   // recommended way to ensure Auth object complete initialization
   // https://firebase.google.com/docs/auth/web/manage-users
-
   getState().auth.isAuthenticated
     ? ""
-    : await firebase.auth().onAuthStateChanged(async function (user) {
-        console.log(user);
+    : firebase.auth().onAuthStateChanged(async function (user) {
         if (user) {
-          let username = "";
           const currentUser = firebase.auth().currentUser;
+          const keyUserInformation: IAuthPayload = {
+            email: currentUser ? currentUser.email : undefined,
+            uid: currentUser ? currentUser.uid : undefined,
+            username: "",
+            loading: false,
+          };
           await firebase
             .firestore()
             .collection("users")
             .get()
             .then((querySnapshot) => {
-              querySnapshot.forEach((doc) =>
-                doc.get("email").toLowerCase() === currentUser?.email
-                  ? (username = doc.get("username"))
-                  : ""
-              );
+              querySnapshot.forEach((doc) => {
+                if (doc.get("email").toLowerCase() === currentUser?.email) {
+                  keyUserInformation.username = doc.get("username");
+                  keyUserInformation.subscribed = doc.get("subscribed");
+                }
+                return;
+              });
             });
 
-          const keyUserInformation: IAuthPayload = {
-            email: currentUser ? currentUser.email : undefined,
-            uid: currentUser ? currentUser.uid : undefined,
-            username: username,
-            loading: false,
-          };
           dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
         } else {
           // No user is signed in.
-
           const keyUserInformation: IAuthPayload = {
             email: undefined,
             uid: undefined,
@@ -137,32 +137,32 @@ export const loadAlreadyLoggedIn = (): AppThunk => async (
 export const login = (email: string, password: string): AppThunk => async (
   dispatch
 ): Promise<void> => {
-  let username = "";
-
   await firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(async () => {
+      const currentUser = firebase.auth().currentUser;
+      const keyUserInformation: IAuthPayload = {
+        email: currentUser ? currentUser.email : undefined,
+        uid: currentUser ? currentUser.uid : undefined,
+        username: "",
+        loading: false,
+      };
+
       await firebase
         .firestore()
         .collection("users")
         .get()
         .then((querySnapshot) => {
-          querySnapshot.forEach((doc) =>
-            doc.get("email").toLowerCase() === email
-              ? (username = doc.get("username"))
-              : ""
-          );
+          querySnapshot.forEach((doc) => {
+            if (doc.get("email").toLowerCase() === currentUser?.email) {
+              keyUserInformation.username = doc.get("username");
+              keyUserInformation.subscribed = doc.get("subscribed");
+            }
+            return;
+          });
         });
 
-      const currentUser = firebase.auth().currentUser;
-
-      const keyUserInformation: IAuthPayload = {
-        email: currentUser ? currentUser.email : undefined,
-        uid: currentUser ? currentUser.uid : undefined,
-        username: username,
-        loading: false,
-      };
       dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
     })
     .catch((error) => {
@@ -192,64 +192,61 @@ export const test = () => async (
   // no return statement here, so return nil
 };
 
-// // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-// export const signup = (email: string, password: string): AppThunk => async (
-//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//   dispatch
-// ): Promise<void> => {
-//   // the inner function returns void, but this is Async so its a Promise<void> type
-
-//   //https://stackoverflow.com/questions/40389946/how-do-i-set-the-displayname-of-firebase-user/40429080
-//   await firebase
-//     .auth()
-//     .createUserWithEmailAndPassword(email, password)
-//     .then(() => {
-//       // authentication successful if you get here
-//       const currentUser = firebase.auth().currentUser;
-//       const keyUserInformation: IAuthPayload = {
-//         email: currentUser ? currentUser.email : undefined,
-//         uid: currentUser ? currentUser.uid : undefined,
-//         loading: false,
-//       };
-//       dispatch({ type: REGISTER_SUCCESS, payload: keyUserInformation });
-//     })
-//     .catch((error) => {
-//       const errorCode = error.code;
-//       const errorMessage = error.message;
-//       console.log(errorCode + " " + errorMessage);
-//       dispatch({ type: REGISTER_FAILURE });
-//       dispatch(alertError("email already exists", "error"));
-
-//       // ..
-//     });
-// };
-
-// // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-// export const loadAlreadyLoggedIn = (): AppThunk => async (
-//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//   dispatch
-// ): Promise<void> => {
-//   // recommended way to ensure Auth object complete initialization
-//   // https://firebase.google.com/docs/auth/web/manage-users
-//   await firebase.auth().onAuthStateChanged(function (user) {
-//     if (user) {
-//       const currentUser = firebase.auth().currentUser;
-//       console.log(currentUser);
-//       const keyUserInformation: IAuthPayload = {
-//         email: currentUser ? currentUser.email : undefined,
-//         uid: currentUser ? currentUser.uid : undefined,
-//         loading: false,
-//       };
-//       dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
-//     } else {
-//       // No user is signed in.
-
-//       const keyUserInformation: IAuthPayload = {
-//         email: undefined,
-//         uid: undefined,
-//         loading: false,
-//       };
-//       dispatch({ type: LOGIN_FAILURE, payload: keyUserInformation });
-//     }
-//   });
-// };
+export const subscribe = (
+  community: string,
+  uid: string | null | undefined
+): AppThunk => async (dispatch): Promise<void> => {
+  await firebase
+    .firestore()
+    .collection("users")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach(async (doc) => {
+        if (doc.id === uid) {
+          // I grouped users by UID
+          if (!doc.get("subscribed").includes(community)) {
+            const updatedSubscribed = [...doc.get("subscribed"), community];
+            await firebase.firestore().collection("users").doc(uid).update({
+              subscribed: updatedSubscribed,
+            });
+            dispatch({
+              type: SUBSCRIBE_UPDATE,
+              payload: {
+                subscribed: updatedSubscribed,
+              },
+            });
+          }
+        }
+      });
+    });
+};
+export const unsubscribe = (
+  community: string,
+  uid: string | null | undefined
+): AppThunk => async (dispatch): Promise<void> => {
+  await firebase
+    .firestore()
+    .collection("users")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach(async (doc) => {
+        if (doc.id === uid) {
+          // I grouped users by UID
+          if (doc.get("subscribed").includes(community)) {
+            const updatedSubscribed = doc
+              .get("subscribed")
+              .filter((x: string) => x !== community);
+            await firebase.firestore().collection("users").doc(uid).update({
+              subscribed: updatedSubscribed,
+            });
+            dispatch({
+              type: SUBSCRIBE_UPDATE,
+              payload: {
+                subscribed: updatedSubscribed,
+              },
+            });
+          }
+        }
+      });
+    });
+};
