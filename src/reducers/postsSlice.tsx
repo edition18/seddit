@@ -1,4 +1,4 @@
-import { RETRIEVE_COMMUNITY_POSTS } from "../actions/types";
+import { RETRIEVE_COMMUNITY_POSTS, SUBMIT_POST } from "../actions/types";
 import { IPostsState, IPostsPayload } from "../definitions";
 
 const initialState: IPostsState = {
@@ -18,6 +18,7 @@ export default function (
         posts: action.payload.posts,
         loading: action.payload.loading,
       };
+    case SUBMIT_POST:
     default:
       return state;
   }

@@ -27,3 +27,25 @@ export const alertError = (
     timeout
   );
 };
+
+export const alertSuccess = (
+  message: string,
+  severity: "error" | "success" | "info" | "warning" | undefined,
+  timeout = 5000
+) => async (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dispatch: ThunkDispatch<any, unknown, AnyAction>
+): Promise<void> => {
+  const id = uuidv4();
+  const payload: IAlertPayload = {
+    message: message,
+    id: id,
+    severity: severity,
+  };
+
+  dispatch({ type: SET_ALERT, payload: payload });
+  setTimeout(
+    () => dispatch({ type: REMOVE_ALERT, payload: { id: id } }),
+    timeout
+  );
+};

@@ -64,7 +64,6 @@ export interface IPostsPayload {
 export interface IPost extends IComment {
   thumbnail: string; //image or video
   title: string;
-  body: string;
   nsfw: boolean;
 }
 
@@ -74,7 +73,6 @@ export interface IComment {
   lastEditDateTime?: number;
   uid?: string; //unique user id per auth()
   //post specific
-  pid?: string; //postid
   community?: string; //subreddit eqv
   body: string;
   comments?: IComment[];

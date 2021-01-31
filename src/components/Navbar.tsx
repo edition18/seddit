@@ -13,12 +13,13 @@ import { loadAlreadyLoggedIn, logout } from "../actions/auth";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Alert, AlertTitle } from "@material-ui/lab";
 
 const Navbar: FunctionComponent = () => {
   const authState = useSelector((state: RootState) => state.auth);
   const [signup, showSignup] = useState(false);
   const [login, showLogin] = useState(false);
-
+  const alertsState = useSelector((state: RootState) => state.alerts);
   useEffect(() => {
     if (authState.isAuthenticated) {
       showSignup(false);
@@ -41,6 +42,14 @@ const Navbar: FunctionComponent = () => {
   return (
     <Fragment>
       <AppBar position="static" color="primary">
+        {alertsState.length !== 0 && signup === false && login === false
+          ? alertsState.map((alert) => (
+              <Alert variant="filled" severity={alert.severity}>
+                <AlertTitle>Error</AlertTitle>
+                {alert.message}
+              </Alert>
+            ))
+          : ""}
         <Toolbar>
           <IconButton edge="start" color="inherit">
             <RecordVoiceOverIcon />

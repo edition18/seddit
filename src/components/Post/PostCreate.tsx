@@ -1,11 +1,20 @@
-import { Button, TextField, Typography } from "@material-ui/core";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import React, { FunctionComponent, useState } from "react";
 import { useSelector } from "react-redux";
 import { match } from "react-router-dom";
-import { IPost, RootState } from "../../definitions";
+import { submitPost } from "../../actions/posts";
+import { IPost, RootState, useThunkDispatch } from "../../definitions";
 import useStyles from "../../styles/customStyles";
 import CreatePostSidebar from "../Sidebar/CreatePostSidebar";
+
+import { useHistory } from "react-router-dom";
 
 interface PostCreateProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,6 +28,8 @@ interface matchOverwrite extends match {
 }
 
 const PostCreate: FunctionComponent<PostCreateProps> = ({ match }) => {
+  const history = useHistory(); // for redirects
+  const thunkDispatch = useThunkDispatch();
   const authState = useSelector((state: RootState) => state.auth);
   const classes = useStyles();
   const [postData, setPostData] = useState<IPost>({
@@ -31,13 +42,20 @@ const PostCreate: FunctionComponent<PostCreateProps> = ({ match }) => {
     setPostData({ ...postData, [e.currentTarget.name]: e.currentTarget.value });
   };
 
-  const onSubmit = async () => {
-    alert("submit");
+  const onToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPostData({
+      ...postData,
+      [e.currentTarget.name]: e.currentTarget.checked,
+    });
+  };
+
+  const onSubmit = () => {
+    thunkDispatch(submitPost(postData, match.params.community, authState.uid));
+    history.push("/community/" + match.params.community);
   };
 
   return (
     <Grid container>
-      {console.log(match.params.community)}
       <Grid item xs={9}>
         {authState.isAuthenticated ? (
           <Grid container className={classes.container}>
@@ -89,6 +107,10 @@ const PostCreate: FunctionComponent<PostCreateProps> = ({ match }) => {
                 variant="outlined"
               />
             </Grid>
+            <FormControlLabel
+              control={<Checkbox onChange={onToggle} id="nsfw" name="nsfw" />}
+              label="nsfw"
+            />
             <Button fullWidth onClick={onSubmit}>
               Create Post
             </Button>
