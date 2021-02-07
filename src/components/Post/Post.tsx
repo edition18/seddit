@@ -19,7 +19,7 @@ const Post: FunctionComponent<PostProps> = ({
   const classes = useStyles();
   return (
     <Grid container>
-      <Grid item xs={3}>
+      <Grid item xs={3} className={classes.postPreviewSize}>
         {/* image container */}
         {thumbnail ? (
           <img
@@ -38,12 +38,12 @@ const Post: FunctionComponent<PostProps> = ({
           <img className={classes.autofitImage} src={noimageavailable}></img>
         )}
       </Grid>
-      <Grid item xs={9}>
+      <Grid item xs={9} className={classes.relative}>
         {/* actual content container */}
 
         <Typography>{title}</Typography>
         <Typography>{body}</Typography>
-        <Typography>
+        <Typography className={classes.relative}>
           {datetime !== undefined
             ? DateTime.fromMillis(datetime).toLocaleString(
                 DateTime.DATETIME_FULL

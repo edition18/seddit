@@ -59,11 +59,7 @@ const PostCreate: FunctionComponent<PostCreateProps> = ({ match }) => {
       <Grid item xs={9}>
         {authState.isAuthenticated ? (
           <Grid container className={classes.container}>
-            <Grid
-              item
-              xs={12}
-              className={classes.alignLeftChildElementsAsBlock}
-            >
+            <Grid item xs={12} className={classes.displayBlock}>
               <Typography variant="h5">Title of post</Typography>
               <TextField
                 fullWidth
@@ -75,11 +71,7 @@ const PostCreate: FunctionComponent<PostCreateProps> = ({ match }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              xs={12}
-              className={classes.alignLeftChildElementsAsBlock}
-            >
+            <Grid item xs={12} className={classes.displayBlock}>
               <Typography variant="h5">Thumbnail (image link)</Typography>
               <TextField
                 fullWidth
@@ -91,11 +83,7 @@ const PostCreate: FunctionComponent<PostCreateProps> = ({ match }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              xs={12}
-              className={classes.alignLeftChildElementsAsBlock}
-            >
+            <Grid item xs={12} className={classes.displayBlock}>
               <Typography variant="h5">Body</Typography>
               <TextField
                 fullWidth

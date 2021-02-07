@@ -15,13 +15,13 @@ export const retrievePostsByCommunity = (community: string): AppThunk => async (
     .then(function (querySnapshot) {
       querySnapshot.forEach(function (doc) {
         // doc.data() is never undefined for query doc snapshots
-        const postObject: IPost = doc.data() as IPost;
+        const postObject: IPost = doc.data() as IPost; // TYPE ASSERTION!
         const postObjectWithDocId: IPostWithDocId = {
           ...postObject,
           docId: doc.id,
         };
 
-        retrievedPosts.push(postObjectWithDocId); // TYPE ASSERTION!
+        retrievedPosts.push(postObjectWithDocId);
       });
     });
   dispatch({

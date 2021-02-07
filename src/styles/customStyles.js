@@ -12,17 +12,13 @@ const useStyles = makeStyles(() => ({
     // padding: "0 30px",
   },
   textFields: { color: theme.palette.primary.dark },
-  centerText: { textAlign: "center" },
   container: { padding: 9 },
-  marginAutoItem: {
-    margin: "auto",
-  },
   centerChildElements: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   },
-  alignLeftChildElementsAsBlock: {
+  displayBlock: {
     display: "block",
   },
   disabledButton: {
@@ -32,6 +28,21 @@ const useStyles = makeStyles(() => ({
     height: "100%",
     width: "100%",
     objectFit: "contain",
+  },
+  relative: {
+    position: "relative",
+  },
+  bottomRight: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+  },
+  postPreviewSize: {
+    height: "20%",
+  },
+  centerText: { textAlign: "center" },
+  marginAutoItem: {
+    margin: "auto",
   },
 }));
 
