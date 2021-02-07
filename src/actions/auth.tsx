@@ -11,7 +11,7 @@ import {
 } from "./types";
 
 import { IAuthPayload, IActionCreator, AppThunk } from "../definitions";
-import { alertError } from "./alerts";
+import { alertError, alertSuccess } from "./alerts";
 
 // normal action type
 // interface AuthAction extends Action {
@@ -74,6 +74,7 @@ export const signup = (
         });
 
         dispatch({ type: REGISTER_SUCCESS, payload: keyUserInformation });
+        dispatch(alertSuccess("registered", "success"));
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -164,6 +165,7 @@ export const login = (email: string, password: string): AppThunk => async (
         });
 
       dispatch({ type: LOGIN_SUCCESS, payload: keyUserInformation });
+      dispatch(alertSuccess("log in success", "success"));
     })
     .catch((error) => {
       const errorCode = error.code;

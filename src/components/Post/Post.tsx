@@ -1,72 +1,72 @@
-import React, { FunctionComponent, Fragment } from "react";
-import { IPost } from "../../definitions";
+import React, { FunctionComponent } from "react";
+import { IPostWithDocId } from "../../definitions";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-
-// uid for test account: 53yPOQMea5Sb3L1Nj2NzBNMTdJ53
+import { DateTime } from "luxon";
+import useStyles from "../../styles/customStyles";
+import noimageavailable from "../../assets/noimageavailable.png";
+import imgnotfound from "../../assets/imgnotfound.jpg";
 
 type PostProps = {
-  post: IPost;
+  post: IPostWithDocId;
 };
 
 const Post: FunctionComponent<PostProps> = ({
-  post: { datetime, thumbnail, title, body },
+  post: { datetime, thumbnail, title, body, docId },
+  // you dont need to destructure stuff you dont need
 }) => {
   // store posts by collections of communities
-
+  const classes = useStyles();
   return (
-    <Fragment>
-      <Grid
-        container
-        direction="column"
-        justify="space-evenly"
-        alignItems="stretch"
-      >
-        <Typography>{datetime}</Typography>
-        <Typography>{thumbnail && thumbnail}</Typography>
+    <Grid container>
+      <Grid item xs={3}>
+        {/* image container */}
+        {thumbnail ? (
+          <img
+            id={"img" + docId}
+            className={classes.autofitImage}
+            src={thumbnail}
+            onError={() => {
+              const imageContainer = document.getElementById(
+                "img" + docId
+              ) as HTMLImageElement;
+
+              imageContainer.src = imgnotfound;
+            }}
+          ></img>
+        ) : (
+          <img className={classes.autofitImage} src={noimageavailable}></img>
+        )}
+      </Grid>
+      <Grid item xs={9}>
+        {/* actual content container */}
+
         <Typography>{title}</Typography>
         <Typography>{body}</Typography>
+        <Typography>
+          {datetime !== undefined
+            ? DateTime.fromMillis(datetime).toLocaleString(
+                DateTime.DATETIME_FULL
+              )
+            : "DATE_ERROR"}
+        </Typography>
       </Grid>
-    </Fragment>
+    </Grid>
   );
 };
 
 export default Post;
 
-// store posts by collections of communities
-//   const db = firebase.firestore();
-
-//   const post1: IPost = {
-//     datetime: Date.now(),
-//     uid: "53yPOQMea5Sb3L1Nj2NzBNMTdJ53",
-//     community: "memes",
-//     title: "check out this dank meme",
-//     body: "see title",
-//   };
-//   const post2: IPost = {
-//     datetime: Date.now(),
-//     uid: "53yPOQMea5Sb3L1Nj2NzBNMTdJ53",
-//     community: "memes",
-//     title: "check out this dank meme, better than the previous!",
-//     body: "see title please",
-//   };
-//   const post3: IPost = {
-//     datetime: Date.now(),
-//     uid: "53yPOQMea5Sb3L1Nj2NzBNMTdJ53",
-//     community: "memes",
-//     title: "seriously, its bad",
-//     body: "see title please",
-//   };
-
-//   const postArray: IPost[] = [post1, post2, post3];
-
-// {postArray.forEach((post: IPost) => {
-//   db.collection(post.community).add({
-//     datetime: post.timeCreated,
-//     uid: post.uid,
-//     community: post.community,
-//     title: post.title,
-//     body: post.body,
-//     thumbnail: post.thumbnail ? post.thumbnail : "",
-//   });
-// })}
+// <Fragment>
+// <Grid
+//   container
+//   direction="column"
+//   justify="space-evenly"
+//   alignItems="stretch"
+// >
+//   <Typography>{datetime}</Typography>
+//   <Typography>{thumbnail && thumbnail}</Typography>
+//   <Typography>{title}</Typography>
+//   <Typography>{body}</Typography>
+// </Grid>
+// </Fragment>

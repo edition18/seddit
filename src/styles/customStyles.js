@@ -28,6 +28,11 @@ const useStyles = makeStyles(() => ({
   disabledButton: {
     backgroundColor: theme.palette.secondary.dark,
   },
+  autofitImage: {
+    height: "100%",
+    width: "100%",
+    objectFit: "contain",
+  },
 }));
 
 export default useStyles;

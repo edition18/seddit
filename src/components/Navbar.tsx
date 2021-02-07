@@ -42,14 +42,6 @@ const Navbar: FunctionComponent = () => {
   return (
     <Fragment>
       <AppBar position="static" color="primary">
-        {alertsState.length !== 0 && signup === false && login === false
-          ? alertsState.map((alert) => (
-              <Alert variant="filled" severity={alert.severity}>
-                <AlertTitle>Error</AlertTitle>
-                {alert.message}
-              </Alert>
-            ))
-          : ""}
         <Toolbar>
           <IconButton edge="start" color="inherit">
             <RecordVoiceOverIcon />
@@ -109,6 +101,14 @@ const Navbar: FunctionComponent = () => {
           {signup ? <Signup toggleSignup={toggleSignup} /> : ""}
         </Toolbar>
       </AppBar>
+      {alertsState.length !== 0 && signup === false && login === false
+        ? alertsState.map((alert) => (
+            <Alert variant="filled" severity={alert.severity}>
+              <AlertTitle>Error</AlertTitle>
+              {alert.message}
+            </Alert>
+          ))
+        : ""}
     </Fragment>
   );
 };

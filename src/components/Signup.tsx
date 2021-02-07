@@ -59,12 +59,16 @@ const Signup: FunctionComponent<SignupProps> = ({ toggleSignup }) => {
         </DialogContentText>
         <Container maxWidth="xs">
           {alertsState.length !== 0
-            ? alertsState.map((alert) => (
-                <Alert variant="filled" severity={alert.severity}>
-                  <AlertTitle>Error</AlertTitle>
-                  {alert.message}
-                </Alert>
-              ))
+            ? alertsState.map((alert) =>
+                alert.severity === "error" ? (
+                  <Alert variant="filled" severity={alert.severity}>
+                    <AlertTitle>Error</AlertTitle>
+                    {alert.message}
+                  </Alert>
+                ) : (
+                  ""
+                )
+              )
             : ""}
           <form noValidate autoComplete="off">
             <Grid container className={classes.container}>

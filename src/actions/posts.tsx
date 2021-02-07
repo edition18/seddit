@@ -24,7 +24,6 @@ export const retrievePostsByCommunity = (community: string): AppThunk => async (
         retrievedPosts.push(postObjectWithDocId); // TYPE ASSERTION!
       });
     });
-  console.log(retrievedPosts);
   dispatch({
     type: RETRIEVE_COMMUNITY_POSTS,
     payload: { posts: retrievedPosts, loading: false },
