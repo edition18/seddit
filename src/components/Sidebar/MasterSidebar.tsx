@@ -10,6 +10,7 @@ import { match } from "react-router";
 import CommunitySidebar from "./CommunitySidebar";
 import Test from "../Test";
 import { Typography } from "@material-ui/core";
+import Advertisement from "./Advertisement";
 interface MasterSidebarProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   match: matchOverwrite;
@@ -27,7 +28,7 @@ const MasterSidebar: FunctionComponent<MasterSidebarProps> = ({ match }) => {
   return (
     <Fragment>
       <Typography>Master Sidebar</Typography>
-      {authState.isAuthenticated ? (
+      {authState.isAuthenticated && match.path === "/community/:community" ? (
         <CommunitySidebar
           createPostLink={
             "/community/" + match.params.community + "/createpost"
@@ -35,8 +36,9 @@ const MasterSidebar: FunctionComponent<MasterSidebarProps> = ({ match }) => {
           community={match.params.community}
         />
       ) : (
-        <Test />
+        ""
       )}
+      <Advertisement />
     </Fragment>
   );
 };
