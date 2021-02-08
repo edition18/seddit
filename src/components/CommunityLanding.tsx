@@ -16,6 +16,7 @@ import useStyles from "../styles/customStyles";
 import Test from "./Test";
 
 import CommunitySidebar from "./Sidebar/CommunitySidebar";
+import MasterSidebar from "./Sidebar/MasterSidebar";
 interface CommunityLandingProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   match: matchOverwrite;
@@ -63,6 +64,7 @@ const CommunityLanding: FunctionComponent<CommunityLandingProps> = ({
           ) : (
             <Test />
           )}
+          <MasterSidebar match={match} />
         </Grid>
       </Grid>
     </Fragment>
