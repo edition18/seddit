@@ -6,6 +6,9 @@ import { DateTime } from "luxon";
 import useStyles from "../../styles/customStyles";
 import noimageavailable from "../../assets/noimageavailable.png";
 import imgnotfound from "../../assets/imgnotfound.jpg";
+import { IconButton } from "@material-ui/core";
+import ArrowDownward from "@material-ui/icons/ArrowDownward";
+import ArrowUpward from "@material-ui/icons/ArrowUpward";
 
 type PostProps = {
   post: IPostWithDocId;
@@ -18,7 +21,16 @@ const Post: FunctionComponent<PostProps> = ({
   // store posts by collections of communities
   const classes = useStyles();
   return (
-    <Grid container>
+    <Grid container className={classes.container}>
+      <Grid item xs={1} className={classes.centerChildElementsVertically}>
+        {/* arrows container */}
+        <IconButton color="inherit">
+          <ArrowUpward />
+        </IconButton>
+        <IconButton color="inherit">
+          <ArrowDownward />
+        </IconButton>
+      </Grid>
       <Grid item xs={3} className={classes.postPreviewSize}>
         {/* image container */}
         {thumbnail ? (
@@ -38,12 +50,12 @@ const Post: FunctionComponent<PostProps> = ({
           <img className={classes.autofitImage} src={noimageavailable}></img>
         )}
       </Grid>
-      <Grid item xs={9} className={classes.relative}>
+      <Grid item xs={8} className={classes.relative}>
         {/* actual content container */}
 
         <Typography>{title}</Typography>
         <Typography>{body}</Typography>
-        <Typography className={classes.relative}>
+        <Typography className={classes.bottomRight}>
           {datetime !== undefined
             ? DateTime.fromMillis(datetime).toLocaleString(
                 DateTime.DATETIME_FULL

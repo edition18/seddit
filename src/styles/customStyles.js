@@ -38,11 +38,17 @@ const useStyles = makeStyles(() => ({
     right: 0,
   },
   postPreviewSize: {
-    height: "20%",
+    height: "200px",
   },
   centerText: { textAlign: "center" },
   marginAutoItem: {
     margin: "auto",
+  },
+  centerChildElementsVertically: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
   },
 }));
 
