@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import "fontsource-roboto";
 import useStyles from "../../styles/customStyles";
 import { Link } from "react-router-dom";
-import { Typography } from "@material-ui/core";
+
 import { RootState, useThunkDispatch } from "../../definitions";
 
 import { subscribe, unsubscribe } from "../../actions/auth";
@@ -27,8 +27,6 @@ const CommunitySidebar: FunctionComponent<CommunitySidebarProps> = ({
   // authState.subscribed?.filter((community) => community === )
   return (
     <Fragment>
-      <Typography>Sidebar</Typography>
-
       {authState.isAuthenticated && !authState.subscribed?.includes("memes") ? (
         <Grid container>
           <Grid

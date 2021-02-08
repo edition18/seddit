@@ -13,9 +13,6 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import "fontsource-roboto";
 import useStyles from "../styles/customStyles";
-import Test from "./Test";
-
-import CommunitySidebar from "./Sidebar/CommunitySidebar";
 import MasterSidebar from "./Sidebar/MasterSidebar";
 interface CommunityLandingProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,7 +34,6 @@ const CommunityLanding: FunctionComponent<CommunityLandingProps> = ({
   }, []);
   const classes = useStyles();
   const postsState = useSelector((state: RootState) => state.posts);
-  const authState = useSelector((state: RootState) => state.auth);
   return (
     <Fragment>
       <Typography variant="h2" className={classes.centerText}>
@@ -54,16 +50,6 @@ const CommunityLanding: FunctionComponent<CommunityLandingProps> = ({
           )}
         </Grid>
         <Grid item xs={3}>
-          {authState.isAuthenticated ? (
-            <CommunitySidebar
-              createPostLink={
-                "/community/" + match.params.community + "/createpost"
-              }
-              community={match.params.community}
-            />
-          ) : (
-            <Test />
-          )}
           <MasterSidebar match={match} />
         </Grid>
       </Grid>
