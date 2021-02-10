@@ -61,13 +61,13 @@ export interface IPostsPayload {
   loading: boolean;
 }
 
-export interface IPost extends IComment {
+export interface IPost extends IDetail {
   thumbnail: string; //image or video
   title: string;
   nsfw: boolean;
 }
 
-export interface IComment {
+export interface IDetail {
   // general information
   datetime?: number;
   lastEditDateTime?: number;
@@ -75,11 +75,15 @@ export interface IComment {
   //post specific
   community?: string; //subreddit eqv
   body: string;
-  comments?: IComment[];
   upvotes?: number;
   downvotes?: number;
 }
 
+export interface IComment extends IDetail {
+  cid: string;
+  comments: IComment[];
+}
+
 export interface IPostWithDocId extends IPost {
-  docId: string;
+  docId: string; //docId acts as unique parent post identifier
 }

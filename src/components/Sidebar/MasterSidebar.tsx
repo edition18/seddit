@@ -8,8 +8,7 @@ import { RootState } from "../../definitions";
 import { match } from "react-router";
 
 import CommunitySidebar from "./CommunitySidebar";
-import Test from "../Test";
-import { Typography } from "@material-ui/core";
+
 import Advertisement from "./Advertisement";
 interface MasterSidebarProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,7 +26,6 @@ const MasterSidebar: FunctionComponent<MasterSidebarProps> = ({ match }) => {
   // authState.subscribed?.filter((community) => community === )
   return (
     <Fragment>
-      <Typography>Master Sidebar</Typography>
       {authState.isAuthenticated && match.path === "/community/:community" ? (
         <CommunitySidebar
           createPostLink={

@@ -13,6 +13,7 @@ const useStyles = makeStyles(() => ({
   },
   textFields: { color: theme.palette.primary.dark },
   container: { padding: 9 },
+
   centerChildElements: {
     display: "flex",
     alignItems: "center",
@@ -38,7 +39,7 @@ const useStyles = makeStyles(() => ({
     right: 0,
   },
   postPreviewSize: {
-    height: "200px",
+    height: "150px",
   },
   centerText: { textAlign: "center" },
   marginAutoItem: {
@@ -49,6 +50,10 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
+  },
+  hyperlinkFormat: {
+    textDecoration: "none" /* no underline */,
+    color: "inherit",
   },
 }));
 

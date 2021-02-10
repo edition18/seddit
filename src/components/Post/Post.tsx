@@ -9,19 +9,30 @@ import imgnotfound from "../../assets/imgnotfound.jpg";
 import { IconButton } from "@material-ui/core";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
+import { Link } from "react-router-dom";
+import { match } from "react-router";
 
 type PostProps = {
   post: IPostWithDocId;
+  match: matchOverwrite;
 };
+
+interface matchOverwrite extends match {
+  params: { [key: string]: string };
+  // i need to tell typescript that params will
+  //indeed be of property (type strings) of strings
+}
 
 const Post: FunctionComponent<PostProps> = ({
   post: { datetime, thumbnail, title, body, docId },
+  match,
   // you dont need to destructure stuff you dont need
 }) => {
   // store posts by collections of communities
   const classes = useStyles();
   return (
     <Grid container className={classes.container}>
+      {console.log(match)}
       <Grid item xs={1} className={classes.centerChildElementsVertically}>
         {/* arrows container */}
         <IconButton color="inherit">
@@ -31,7 +42,7 @@ const Post: FunctionComponent<PostProps> = ({
           <ArrowDownward />
         </IconButton>
       </Grid>
-      <Grid item xs={3} className={classes.postPreviewSize}>
+      <Grid item xs={2} className={classes.postPreviewSize}>
         {/* image container */}
         {thumbnail ? (
           <img
@@ -50,11 +61,18 @@ const Post: FunctionComponent<PostProps> = ({
           <img className={classes.autofitImage} src={noimageavailable}></img>
         )}
       </Grid>
-      <Grid item xs={8} className={classes.relative}>
+      <Grid item xs={9} className={classes.relative}>
         {/* actual content container */}
 
-        <Typography>{title}</Typography>
-        <Typography>{body}</Typography>
+        <Typography
+          className={`${classes.hyperlinkFormat} ${classes.textFields}`}
+          variant="h3"
+          component={Link}
+          to={match.url + "/" + docId}
+        >
+          {title}
+        </Typography>
+        <Typography>{body.substr(0, 50) + "...."}</Typography>
         <Typography className={classes.bottomRight}>
           {datetime !== undefined
             ? DateTime.fromMillis(datetime).toLocaleString(

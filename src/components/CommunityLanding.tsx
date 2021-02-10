@@ -43,7 +43,7 @@ const CommunityLanding: FunctionComponent<CommunityLandingProps> = ({
         <Grid item xs={9}>
           {!postsState.loading ? (
             postsState.posts.map((post) => (
-              <Post key={uuidv4()} post={post}></Post>
+              <Post key={uuidv4()} post={post} match={match}></Post>
             ))
           ) : (
             <CircularProgress />
