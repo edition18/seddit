@@ -75,8 +75,8 @@ export interface IDetail {
   //post specific
   community?: string; //subreddit eqv
   body: string;
-  upvotes?: number;
-  downvotes?: number;
+  upvotes: number;
+  downvotes: number;
 }
 
 export interface IComment extends IDetail {

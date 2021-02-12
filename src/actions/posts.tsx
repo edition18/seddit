@@ -45,6 +45,8 @@ export const submitPost = (
     nsfw: postData.nsfw,
     datetime: Date.now(),
     uid: uid,
+    upvotes: postData.upvotes,
+    downvotes: postData.downvotes,
   });
   dispatch({ type: SUBMIT_POST });
   dispatch(alertSuccess("post created", "success"));

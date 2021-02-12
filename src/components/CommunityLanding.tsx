@@ -1,6 +1,6 @@
 import React, { FunctionComponent, Fragment, useEffect } from "react";
 
-import Post from "./Post/Post";
+import PostPreview from "./Post/PostPreview";
 
 import { match } from "react-router";
 
@@ -36,6 +36,7 @@ const CommunityLanding: FunctionComponent<CommunityLandingProps> = ({
   const postsState = useSelector((state: RootState) => state.posts);
   return (
     <Fragment>
+      {console.log(postsState.posts)}
       <Typography variant="h2" className={classes.centerText}>
         Welcome to {match.params.community}
       </Typography>
@@ -43,7 +44,11 @@ const CommunityLanding: FunctionComponent<CommunityLandingProps> = ({
         <Grid item xs={9}>
           {!postsState.loading ? (
             postsState.posts.map((post) => (
-              <Post key={uuidv4()} post={post} match={match}></Post>
+              <PostPreview
+                key={uuidv4()}
+                post={post}
+                match={match}
+              ></PostPreview>
             ))
           ) : (
             <CircularProgress />

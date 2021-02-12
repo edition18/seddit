@@ -3,6 +3,7 @@ import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
 import Test from "./components/Test";
 import PostCreate from "./components/Post/PostCreate";
+import PostPage from "./components/Post/PostPage";
 import CommunityLanding from "./components/CommunityLanding";
 import { ThemeProvider } from "@material-ui/core/styles";
 import "./styles/App.css";
@@ -35,6 +36,11 @@ const App: FunctionComponent = () => {
               exact
               path="/community/:community/createpost"
               component={PostCreate}
+            />
+            <Route
+              exact
+              path="/community/:community/:docId"
+              component={PostPage}
             />
           </Switch>
         </Router>

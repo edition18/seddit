@@ -12,7 +12,7 @@ import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import { Link } from "react-router-dom";
 import { match } from "react-router";
 
-type PostProps = {
+type PostPreviewProps = {
   post: IPostWithDocId;
   match: matchOverwrite;
 };
@@ -23,8 +23,8 @@ interface matchOverwrite extends match {
   //indeed be of property (type strings) of strings
 }
 
-const Post: FunctionComponent<PostProps> = ({
-  post: { datetime, thumbnail, title, body, docId },
+const PostPreview: FunctionComponent<PostPreviewProps> = ({
+  post: { datetime, thumbnail, title, body, docId, upvotes, downvotes },
   match,
   // you dont need to destructure stuff you dont need
 }) => {
@@ -32,14 +32,18 @@ const Post: FunctionComponent<PostProps> = ({
   const classes = useStyles();
   return (
     <Grid container className={classes.container}>
-      {console.log(match)}
       <Grid item xs={1} className={classes.centerChildElementsVertically}>
         {/* arrows container */}
         <IconButton color="inherit">
-          <ArrowUpward />
+          <ArrowUpward fontSize="small" />
         </IconButton>
+        <Typography>
+          {upvotes === undefined || downvotes === undefined
+            ? undefined
+            : upvotes - downvotes}
+        </Typography>
         <IconButton color="inherit">
-          <ArrowDownward />
+          <ArrowDownward fontSize="small" />
         </IconButton>
       </Grid>
       <Grid item xs={2} className={classes.postPreviewSize}>
@@ -72,7 +76,7 @@ const Post: FunctionComponent<PostProps> = ({
         >
           {title}
         </Typography>
-        <Typography>{body.substr(0, 50) + "...."}</Typography>
+        <Typography>{body.substr(0, 20) + "...."}</Typography>
         <Typography className={classes.bottomRight}>
           {datetime !== undefined
             ? DateTime.fromMillis(datetime).toLocaleString(
@@ -85,18 +89,4 @@ const Post: FunctionComponent<PostProps> = ({
   );
 };
 
-export default Post;
-
-// <Fragment>
-// <Grid
-//   container
-//   direction="column"
-//   justify="space-evenly"
-//   alignItems="stretch"
-// >
-//   <Typography>{datetime}</Typography>
-//   <Typography>{thumbnail && thumbnail}</Typography>
-//   <Typography>{title}</Typography>
-//   <Typography>{body}</Typography>
-// </Grid>
-// </Fragment>
+export default PostPreview;

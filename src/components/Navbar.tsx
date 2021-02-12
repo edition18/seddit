@@ -104,7 +104,7 @@ const Navbar: FunctionComponent = () => {
       {alertsState.length !== 0 && signup === false && login === false
         ? alertsState.map((alert) => (
             <Alert variant="filled" severity={alert.severity}>
-              <AlertTitle>Error</AlertTitle>
+              <AlertTitle>Notification</AlertTitle>
               {alert.message}
             </Alert>
           ))

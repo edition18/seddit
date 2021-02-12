@@ -38,6 +38,10 @@ const useStyles = makeStyles(() => ({
     bottom: 0,
     right: 0,
   },
+  floatRight: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
   postPreviewSize: {
     height: "150px",
   },
