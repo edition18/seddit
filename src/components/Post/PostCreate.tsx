@@ -60,7 +60,7 @@ const PostCreate: FunctionComponent<PostCreateProps> = ({ match }) => {
     <Grid container>
       <Grid item xs={9}>
         {authState.isAuthenticated ? (
-          <Grid container className={classes.container}>
+          <Grid container className={classes.defaultPadding}>
             <Grid item xs={12} className={classes.displayBlock}>
               <Typography variant="h5">Title of post</Typography>
               <TextField

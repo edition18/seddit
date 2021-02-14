@@ -31,7 +31,7 @@ const PostPreview: FunctionComponent<PostPreviewProps> = ({
   // store posts by collections of communities
   const classes = useStyles();
   return (
-    <Grid container className={classes.container}>
+    <Grid container className={classes.defaultPadding}>
       <Grid item xs={1} className={classes.centerChildElementsVertically}>
         {/* arrows container */}
         <IconButton color="inherit">

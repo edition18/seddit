@@ -12,8 +12,8 @@ const useStyles = makeStyles(() => ({
     // padding: "0 30px",
   },
   textFields: { color: theme.palette.primary.dark },
-  container: { padding: 9 },
 
+  defaultPadding: { padding: 6 },
   centerChildElements: {
     display: "flex",
     alignItems: "center",
@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
     bottom: 0,
     right: 0,
   },
-  floatRight: {
+  childPositionRight: {
     display: "flex",
     justifyContent: "flex-end",
   },
@@ -58,6 +58,9 @@ const useStyles = makeStyles(() => ({
   hyperlinkFormat: {
     textDecoration: "none" /* no underline */,
     color: "inherit",
+  },
+  warningButton: {
+    color: "red",
   },
 }));
 

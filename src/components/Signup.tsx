@@ -71,7 +71,7 @@ const Signup: FunctionComponent<SignupProps> = ({ toggleSignup }) => {
               )
             : ""}
           <form noValidate autoComplete="off">
-            <Grid container className={classes.container}>
+            <Grid container className={classes.defaultPadding}>
               {/* adds more padding w/ this subcontainer*/}
               <Grid container>
                 <Grid item xs={12} className={classes.centerChildElements}>
