@@ -4,7 +4,7 @@ import { match } from "react-router-dom";
 import { retrievePostsByCommunity } from "../../actions/posts";
 import { RootState, useThunkDispatch } from "../../definitions";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+
 import { Fragment } from "react";
 import MasterSidebar from "../Sidebar/MasterSidebar";
 import useStyles from "../../styles/customStyles";
@@ -12,7 +12,13 @@ import { IconButton } from "@material-ui/core";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import PostEditMenu from "./PostEditMenu";
-import { TextField } from "@material-ui/core";
+
+import {
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 
 interface PostPageProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,14 +43,35 @@ const PostPage: FunctionComponent<PostPageProps> = ({ match }) => {
   }, [postsState.posts]);
 
   const [editView, setEditView] = useState(false);
-
-  const toggleEditView = () => {
-    editView === false ? setEditView(true) : setEditView(false);
+  const [formData, setFormData] = useState({
+    title: "",
+    body: "",
+    nsfw: false,
+  });
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
   };
 
   const specificPost = postsState.posts.find(
     (post) => post.docId === match.params.docId
   );
+
+  const onToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.currentTarget.name]: e.currentTarget.checked,
+    });
+  };
+
+  const toggleEditView = () => {
+    if (editView === false) {
+      setEditView(true);
+    } else {
+      // changes made, dispatch changes
+
+      setEditView(false);
+    }
+  };
 
   return (
     <Fragment>
@@ -71,30 +98,66 @@ const PostPage: FunctionComponent<PostPageProps> = ({ match }) => {
                   <Grid container>
                     <Grid item xs={12} className={classes.defaultPadding}>
                       <TextField
+                        fullWidth={true}
                         name="title"
                         defaultValue={specificPost?.title}
                         className={classes.textFields}
                         id="title"
                         label="title"
                         variant="outlined"
+                        onChange={onChange}
                       />
                     </Grid>
                     <Grid item xs={12} className={classes.defaultPadding}>
+                      <br /> {/* line break */}
                       <TextField
+                        fullWidth={true}
+                        name="thumbnail"
+                        defaultValue={specificPost?.thumbnail}
+                        className={classes.textFields}
+                        id="thumbnail"
+                        label="thumbnail"
+                        variant="outlined"
+                        onChange={onChange}
+                      />
+                    </Grid>
+                    <Grid item xs={12} className={classes.defaultPadding}>
+                      <br /> {/* line break */}
+                      <TextField
+                        fullWidth={true}
                         name="body"
                         defaultValue={specificPost?.body}
                         className={classes.textFields}
                         id="body"
                         label="body"
                         variant="outlined"
+                        onChange={onChange}
                       />
                     </Grid>
+
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          onChange={onToggle}
+                          checked={specificPost?.nsfw}
+                          name="nsfw"
+                        />
+                      }
+                      label="nsfw"
+                    />
                   </Grid>
                 </Fragment>
               ) : (
                 <Fragment>
                   <Typography variant="h2">{specificPost?.title}</Typography>
                   <Typography>{specificPost?.body}</Typography>
+
+                  <FormControlLabel
+                    control={
+                      <Checkbox checked={specificPost?.nsfw} name="nsfw" />
+                    }
+                    label="nsfw"
+                  />
                 </Fragment>
               )}
 

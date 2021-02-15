@@ -9,3 +9,4 @@ export const LOGOUT = "LOGOUT";
 export const RETRIEVE_COMMUNITY_POSTS = "RETRIEVE_COMMUNITY_POSTS";
 export const SUBSCRIBE_UPDATE = "SUBSCRIBE_UPDATE";
 export const SUBMIT_POST = "SUBMIT_POST";
+export const EDIT_POST = "EDIT_POST";
