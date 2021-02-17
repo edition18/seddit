@@ -34,9 +34,9 @@ const CommunityLanding: FunctionComponent<CommunityLandingProps> = ({
   }, []);
   const classes = useStyles();
   const postsState = useSelector((state: RootState) => state.posts);
+
   return (
     <Fragment>
-      {console.log(postsState.posts)}
       <Typography variant="h2" className={classes.centerText}>
         Welcome to {match.params.community}
       </Typography>

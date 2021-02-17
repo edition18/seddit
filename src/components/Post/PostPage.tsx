@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { match } from "react-router-dom";
-import { retrievePostsByCommunity } from "../../actions/posts";
+import { retrievePostsByCommunity, updatePost } from "../../actions/posts";
 import { RootState, useThunkDispatch } from "../../definitions";
 import Grid from "@material-ui/core/Grid";
 
@@ -12,6 +12,8 @@ import { IconButton } from "@material-ui/core";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import PostEditMenu from "./PostEditMenu";
+import CommentBox from "./CommentBox";
+import Comments from "./Comments";
 
 import {
   Checkbox,
@@ -41,20 +43,19 @@ const PostPage: FunctionComponent<PostPageProps> = ({ match }) => {
       ? thunkDispatch(retrievePostsByCommunity(match.params.community))
       : "";
   }, [postsState.posts]);
-
+  const specificPost = postsState.posts.find(
+    (post) => post.docId === match.params.docId
+  );
   const [editView, setEditView] = useState(false);
   const [formData, setFormData] = useState({
-    title: "",
-    body: "",
-    nsfw: false,
+    title: specificPost ? specificPost.title : "",
+    body: specificPost ? specificPost.body : "",
+    nsfw: specificPost ? specificPost.nsfw : false,
+    thumbnail: specificPost ? specificPost.thumbnail : "",
   });
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
   };
-
-  const specificPost = postsState.posts.find(
-    (post) => post.docId === match.params.docId
-  );
 
   const onToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -68,7 +69,9 @@ const PostPage: FunctionComponent<PostPageProps> = ({ match }) => {
       setEditView(true);
     } else {
       // changes made, dispatch changes
-
+      thunkDispatch(
+        updatePost(formData, match.params.docId, match.params.community)
+      );
       setEditView(false);
     }
   };
@@ -94,6 +97,7 @@ const PostPage: FunctionComponent<PostPageProps> = ({ match }) => {
             </Grid>
             <Grid item xs={11}>
               {editView ? (
+                // edit mode
                 <Fragment>
                   <Grid container>
                     <Grid item xs={12} className={classes.defaultPadding}>
@@ -139,7 +143,7 @@ const PostPage: FunctionComponent<PostPageProps> = ({ match }) => {
                       control={
                         <Checkbox
                           onChange={onToggle}
-                          checked={specificPost?.nsfw}
+                          checked={formData.nsfw}
                           name="nsfw"
                         />
                       }
@@ -149,13 +153,12 @@ const PostPage: FunctionComponent<PostPageProps> = ({ match }) => {
                 </Fragment>
               ) : (
                 <Fragment>
-                  <Typography variant="h2">{specificPost?.title}</Typography>
-                  <Typography>{specificPost?.body}</Typography>
+                  <Typography variant="h2">{formData?.title}</Typography>
+                  <Typography>{formData?.thumbnail}</Typography>
+                  <Typography>{formData?.body}</Typography>
 
                   <FormControlLabel
-                    control={
-                      <Checkbox checked={specificPost?.nsfw} name="nsfw" />
-                    }
+                    control={<Checkbox checked={formData?.nsfw} name="nsfw" />}
                     label="nsfw"
                   />
                 </Fragment>
@@ -164,6 +167,8 @@ const PostPage: FunctionComponent<PostPageProps> = ({ match }) => {
               {authState.uid === specificPost?.uid && (
                 <PostEditMenu toggleEditView={toggleEditView} />
               )}
+              {authState.isAuthenticated && <CommentBox />}
+              <Comments comments={specificPost?.comments} />
             </Grid>
           </Grid>
         </Grid>

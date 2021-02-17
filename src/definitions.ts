@@ -65,6 +65,7 @@ export interface IPost extends IDetail {
   thumbnail: string; //image or video
   title: string;
   nsfw: boolean;
+  comments?: IComment[];
 }
 
 export interface IDetail {
@@ -74,13 +75,14 @@ export interface IDetail {
   uid?: string; //unique user id per auth()
   //post specific
   community?: string; //subreddit eqv
-  body: string;
-  upvotes: number;
-  downvotes: number;
+  body?: string;
+  upvotes?: number;
+  downvotes?: number;
 }
 
 export interface IComment extends IDetail {
   cid: string;
+  parentcid: string; //direct parent comment node, if its a fresh comment, parent node is the docId
   comments: IComment[];
 }
 

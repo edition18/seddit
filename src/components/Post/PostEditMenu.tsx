@@ -18,6 +18,7 @@ const PostEditMenu: FunctionComponent<PostEditMenuProps> = ({
       className={`${classes.defaultPadding} ${classes.childPositionRight} `}
     >
       <Button onClick={toggleEditView}>Edit</Button>
+
       <Button className={`${classes.warningButton}`}>Delete</Button>
 
       <Typography></Typography>

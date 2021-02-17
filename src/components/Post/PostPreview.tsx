@@ -76,7 +76,7 @@ const PostPreview: FunctionComponent<PostPreviewProps> = ({
         >
           {title}
         </Typography>
-        <Typography>{body.substr(0, 20) + "...."}</Typography>
+        <Typography>{body?.substr(0, 20) + "...."}</Typography>
         <Typography className={classes.bottomRight}>
           {datetime !== undefined
             ? DateTime.fromMillis(datetime).toLocaleString(

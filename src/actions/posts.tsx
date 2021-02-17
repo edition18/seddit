@@ -52,3 +52,23 @@ export const submitPost = (
   dispatch(alertSuccess("post created", "success"));
   dispatch(retrievePostsByCommunity(community));
 };
+
+export const updatePost = (
+  postData: IPost,
+  docId: string,
+  community: string
+): AppThunk => async (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dispatch
+): Promise<void> => {
+  firebase.firestore().collection(community).doc(docId).update({
+    title: postData.title,
+    body: postData.body,
+    nsfw: postData.nsfw,
+    thumbnail: postData.thumbnail,
+  });
+
+  dispatch({ type: SUBMIT_POST });
+  dispatch(alertSuccess("post updated", "success"));
+  dispatch(retrievePostsByCommunity(community));
+};
