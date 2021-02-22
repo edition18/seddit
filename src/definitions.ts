@@ -81,9 +81,10 @@ export interface IDetail {
 }
 
 export interface IComment extends IDetail {
-  cid: string;
-  parentcid: string; //direct parent comment node, if its a fresh comment, parent node is the docId
-  comments: IComment[];
+  cid: string; // {comment array number}{uuidv4}
+  parentcid?: string; //direct parent comment node , {comment array number} if direct comment
+  subcomments: IComment[];
+  comment: string;
 }
 
 export interface IPostWithDocId extends IPost {

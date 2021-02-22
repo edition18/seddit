@@ -9,19 +9,19 @@ import { Fragment } from "react";
 import useStyles from "../../styles/customStyles";
 
 import { TextField, Typography, Button } from "@material-ui/core";
+import { useThunkDispatch } from "../../definitions";
+import { submitPostComment } from "../../actions/posts";
 
-// interface CommentBoxProps {
-//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//   match: matchOverwrite;
-// }
+interface CommentBoxProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  community: string;
+  docId: string;
+}
 
-// interface matchOverwrite extends match {
-//   params: { [key: string]: string };
-//   // i need to tell typescript that params will
-//   //indeed be of property (type strings) of strings
-// }
-
-const CommentBox: FunctionComponent = () => {
+const CommentBox: FunctionComponent<CommentBoxProps> = ({
+  community,
+  docId,
+}) => {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
@@ -49,6 +49,10 @@ const CommentBox: FunctionComponent = () => {
   //       setEditView(false);
   //     }
   //   };
+  const thunkDispatch = useThunkDispatch();
+  const postComment = async () => {
+    thunkDispatch(submitPostComment(formData.comment, community, docId));
+  };
 
   return (
     <Fragment>
@@ -67,7 +71,7 @@ const CommentBox: FunctionComponent = () => {
             xs={12}
             className={`${classes.defaultPadding} ${classes.childPositionRight} `}
           >
-            <Button>Comment</Button>
+            <Button onClick={postComment}>Comment</Button>
           </Grid>
         </Grid>
       </Grid>

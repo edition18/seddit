@@ -15,17 +15,10 @@ import { IComment } from "../../definitions";
 interface CommentsProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   comments: IComment[] | undefined;
-  parentcid?: string;
 }
 
-const Comments: FunctionComponent<CommentsProps> = ({
-  comments,
-  parentcid,
-}) => {
+const Comments: FunctionComponent<CommentsProps> = ({ comments }) => {
   const classes = useStyles();
-  const [parentcid, setParentcid] = useState();
-
-  const getParentCid = () => {};
 
   return (
     <Fragment>
@@ -35,8 +28,10 @@ const Comments: FunctionComponent<CommentsProps> = ({
               // for each comment in comments
               // I want to "save" the parentcid
               <Fragment key={uuidv4()}>
-                <Typography className={classes.test}>{comment.body}</Typography>
-                <Comments comments={comment.comments} parentcid={comment.cid} />
+                <Typography className={classes.test} id={comment.parentcid}>
+                  {comment.body}
+                </Typography>
+                <Comments comments={comment.comments} />
               </Fragment>
             ))
           : ""}

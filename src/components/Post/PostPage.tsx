@@ -167,7 +167,12 @@ const PostPage: FunctionComponent<PostPageProps> = ({ match }) => {
               {authState.uid === specificPost?.uid && (
                 <PostEditMenu toggleEditView={toggleEditView} />
               )}
-              {authState.isAuthenticated && <CommentBox />}
+              {authState.isAuthenticated && (
+                <CommentBox
+                  community={match.params.community}
+                  docId={match.params.docId}
+                />
+              )}
               <Comments comments={specificPost?.comments} />
             </Grid>
           </Grid>

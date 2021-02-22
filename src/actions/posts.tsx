@@ -1,7 +1,8 @@
 import firebase from "../config";
 import { RETRIEVE_COMMUNITY_POSTS, SUBMIT_POST } from "./types";
-import { IPost, IPostWithDocId, AppThunk } from "../definitions";
+import { IPost, IPostWithDocId, AppThunk, IComment } from "../definitions";
 import { alertSuccess } from "./alerts";
+import { v4 as uuidv4 } from "uuid";
 
 export const retrievePostsByCommunity = (community: string): AppThunk => async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -71,4 +72,18 @@ export const updatePost = (
   dispatch({ type: SUBMIT_POST });
   dispatch(alertSuccess("post updated", "success"));
   dispatch(retrievePostsByCommunity(community));
+};
+
+export const submitPostComment = (
+  comment: string,
+  community: string,
+  docId: string
+): AppThunk => async (
+  dispatch
+): // eslint-disable-next-line @typescript-eslint/no-explicit-any
+Promise<void> => {
+  const comment: IComment = {
+    cid: uuidv4(),
+    comment: comment,
+  };
 };
