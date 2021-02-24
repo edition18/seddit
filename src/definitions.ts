@@ -82,8 +82,6 @@ export interface IDetail {
 
 export interface IComment extends IDetail {
   cid: string; // {comment array number}{uuidv4}
-  parentcid?: string; //direct parent comment node , {comment array number} if direct comment
-  subcomments: IComment[];
   comment: string;
 }
 
