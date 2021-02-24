@@ -72,17 +72,15 @@ export interface IDetail {
   // general information
   datetime?: number;
   lastEditDateTime?: number;
-  uid?: string; //unique user id per auth()
+  uid?: string | null | undefined; //unique user id per auth()
   //post specific
-  community?: string; //subreddit eqv
-  body?: string;
+  body: string;
   upvotes?: number;
   downvotes?: number;
 }
 
 export interface IComment extends IDetail {
   cid: string; // {comment array number}{uuidv4}
-  comment: string;
 }
 
 export interface IPostWithDocId extends IPost {

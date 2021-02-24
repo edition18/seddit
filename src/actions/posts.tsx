@@ -77,13 +77,31 @@ export const updatePost = (
 export const submitPostComment = (
   comment: string,
   community: string,
-  docId: string
+  docId: string,
+  uid: string | undefined | null
 ): AppThunk => async (
   dispatch
 ): // eslint-disable-next-line @typescript-eslint/no-explicit-any
 Promise<void> => {
-  const comment: IComment = {
-    cid: uuidv4(),
-    comment: comment,
+  const docCommentLength = firebase
+    .firestore()
+    .collection(community)
+    .doc(docId)
+    .collection("comments")
+    .get()
+    .then((snap) => {
+      return snap.size; // will return the collection size
+    });
+
+  const commentToBeAdded: IComment = {
+    cid: { docCommentLength } + uuidv4(),
+    body: comment,
+    datetime: Date.now(),
+    upvotes: 1,
+    downvotes: 1,
+    uid: uid,
   };
+
+  console.log(commentToBeAdded);
+  dispatch({ type: SUBMIT_POST });
 };

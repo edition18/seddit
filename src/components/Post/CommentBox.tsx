@@ -9,8 +9,9 @@ import { Fragment } from "react";
 import useStyles from "../../styles/customStyles";
 
 import { TextField, Typography, Button } from "@material-ui/core";
-import { useThunkDispatch } from "../../definitions";
+import { RootState, useThunkDispatch } from "../../definitions";
 import { submitPostComment } from "../../actions/posts";
+import { useSelector } from "react-redux";
 
 interface CommentBoxProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,7 +24,7 @@ const CommentBox: FunctionComponent<CommentBoxProps> = ({
   docId,
 }) => {
   const classes = useStyles();
-
+  const authState = useSelector((state: RootState) => state.auth);
   const [formData, setFormData] = useState({
     comment: "",
   });
@@ -51,7 +52,9 @@ const CommentBox: FunctionComponent<CommentBoxProps> = ({
   //   };
   const thunkDispatch = useThunkDispatch();
   const postComment = async () => {
-    thunkDispatch(submitPostComment(formData.comment, community, docId));
+    thunkDispatch(
+      submitPostComment(formData.comment, community, docId, authState.uid)
+    );
   };
 
   return (

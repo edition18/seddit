@@ -37,8 +37,6 @@ const PostCreate: FunctionComponent<PostCreateProps> = ({ match }) => {
     thumbnail: "",
     body: "",
     nsfw: false,
-    upvotes: 1,
-    downvotes: 0,
   });
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPostData({ ...postData, [e.currentTarget.name]: e.currentTarget.value });

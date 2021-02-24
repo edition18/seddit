@@ -23,18 +23,12 @@ const Comments: FunctionComponent<CommentsProps> = ({ comments }) => {
   return (
     <Fragment>
       <Grid container>
-        {comments && comments.length !== 0
-          ? comments.map((comment: IComment) => (
-              // for each comment in comments
-              // I want to "save" the parentcid
-              <Fragment key={uuidv4()}>
-                <Typography className={classes.test} id={comment.parentcid}>
-                  {comment.body}
-                </Typography>
-                <Comments comments={comment.comments} />
-              </Fragment>
-            ))
-          : ""}
+        {comments &&
+          comments.map((comment) => {
+            <Typography key={uuidv4()} className={classes.test}>
+              {comment.body}
+            </Typography>;
+          })}
       </Grid>
     </Fragment>
   );
