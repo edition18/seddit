@@ -30,6 +30,7 @@ const CommentBox: FunctionComponent<CommentBoxProps> = ({
   });
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
+    console.log(formData);
   };
 
   //   const onToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,6 +69,7 @@ const CommentBox: FunctionComponent<CommentBoxProps> = ({
             variant="outlined"
             multiline={true} //allows for "height" of textfield
             rows={3}
+            name="comment"
           ></TextField>
           <Grid
             item

@@ -46,8 +46,8 @@ export const submitPost = (
     nsfw: postData.nsfw,
     datetime: Date.now(),
     uid: uid,
-    upvotes: postData.upvotes,
-    downvotes: postData.downvotes,
+    upvotes: 1,
+    downvotes: 0,
   });
   dispatch({ type: SUBMIT_POST });
   dispatch(alertSuccess("post created", "success"));
@@ -83,7 +83,8 @@ export const submitPostComment = (
   dispatch
 ): // eslint-disable-next-line @typescript-eslint/no-explicit-any
 Promise<void> => {
-  const docCommentLength = firebase
+  console.log(comment);
+  const docCommentLength = await firebase
     .firestore()
     .collection(community)
     .doc(docId)
@@ -93,12 +94,23 @@ Promise<void> => {
       return snap.size; // will return the collection size
     });
 
+  console.log(
+    await firebase
+      .firestore()
+      .collection(community)
+      .doc(docId)
+      .get()
+      .then((snap) => {
+        return snap.data(); // will return the collection size
+      })
+  );
+
   const commentToBeAdded: IComment = {
-    cid: { docCommentLength } + uuidv4(),
+    cid: docCommentLength + uuidv4(),
     body: comment,
     datetime: Date.now(),
     upvotes: 1,
-    downvotes: 1,
+    downvotes: 0,
     uid: uid,
   };
 
