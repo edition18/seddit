@@ -48,6 +48,7 @@ export const submitPost = (
     uid: uid,
     upvotes: 1,
     downvotes: 0,
+    comments: [],
   });
   dispatch({ type: SUBMIT_POST });
   dispatch(alertSuccess("post created", "success"));

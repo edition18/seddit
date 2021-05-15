@@ -61,7 +61,7 @@ const PostPage: FunctionComponent<PostPageProps> = ({ match }) => {
       nsfw: specificPost?.nsfw || false,
       thumbnail: specificPost?.thumbnail || "",
     });
-  }, [specificPost]);
+  }, [postsState.posts.length]);
   const [editView, setEditView] = useState(false);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
