@@ -120,24 +120,27 @@ Promise<void> => {
 };
 
 export const deletePost = (
-  docId: string,
-  community: string
+  community: string,
+  docId: string
 ): AppThunk => async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dispatch
 ): Promise<void> => {
-  // firebase.firestore().collection(community).doc(docId).update({
-  //   title: postData.title,
-  //   body: postData.body,
-  //   nsfw: postData.nsfw,
-  //   thumbnail: postData.thumbnail,
-  // });
-
-  firebase.firestore().collection(community).doc(docId).delete;
+  await firebase
+    .firestore()
+    .collection(community)
+    .doc(docId)
+    .delete()
+    .then(() => {
+      console.log("Document successfully deleted!");
+      dispatch(
+        alertSuccess("post deleted, reverting to community page", "success")
+      );
+      dispatch(retrievePostsByCommunity(community));
+    })
+    .catch((error) => {
+      console.error("Error removing document: ", error);
+    });
 
   dispatch({ type: DELETE_POST });
-  dispatch(
-    alertSuccess("post deleted, reverting to community page", "success")
-  );
-  dispatch(retrievePostsByCommunity(community));
 };

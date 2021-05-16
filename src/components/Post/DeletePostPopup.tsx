@@ -31,7 +31,6 @@ const DeletePostPopup: FunctionComponent<DeletePostPopupProps> = ({
     toggleDeletePostPopup();
   };
 
-  console.log(match);
   const handleDelete = () => {
     thunkDispatch(deletePost(match.params.community, match.params.docId));
   };
