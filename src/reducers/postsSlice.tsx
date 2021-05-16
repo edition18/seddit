@@ -1,4 +1,8 @@
-import { RETRIEVE_COMMUNITY_POSTS, SUBMIT_POST } from "../actions/types";
+import {
+  RETRIEVE_COMMUNITY_POSTS,
+  SUBMIT_POST,
+  DELETE_POST,
+} from "../actions/types";
 import { IPostsState, IPostsPayload } from "../definitions";
 
 const initialState: IPostsState = {
@@ -18,7 +22,8 @@ export default function (
         posts: action.payload.posts,
         loading: action.payload.loading,
       };
-    case SUBMIT_POST:
+    case SUBMIT_POST: //no behavior given we delegate workload to RETRIEVE_COMMUNITY_POSTS reducer
+    case DELETE_POST: //no behavior given we delegate workload to RETRIEVE_COMMUNITY_POSTS reducer
     default:
       return state;
   }

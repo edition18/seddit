@@ -152,7 +152,11 @@ const Signup: FunctionComponent<SignupProps> = ({ toggleSignup }) => {
         </Container>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary" autoFocus>
+        <Button
+          className={`${classes.warningButton}`}
+          onClick={handleClose}
+          color="primary"
+        >
           Close
         </Button>
       </DialogActions>

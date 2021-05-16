@@ -1,5 +1,5 @@
 import firebase from "../config";
-import { RETRIEVE_COMMUNITY_POSTS, SUBMIT_POST } from "./types";
+import { RETRIEVE_COMMUNITY_POSTS, SUBMIT_POST, DELETE_POST } from "./types";
 import { IPost, IPostWithDocId, AppThunk, IComment } from "../definitions";
 import { alertSuccess } from "./alerts";
 import { v4 as uuidv4 } from "uuid";
@@ -117,4 +117,27 @@ Promise<void> => {
 
   console.log(commentToBeAdded);
   dispatch({ type: SUBMIT_POST });
+};
+
+export const deletePost = (
+  docId: string,
+  community: string
+): AppThunk => async (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dispatch
+): Promise<void> => {
+  // firebase.firestore().collection(community).doc(docId).update({
+  //   title: postData.title,
+  //   body: postData.body,
+  //   nsfw: postData.nsfw,
+  //   thumbnail: postData.thumbnail,
+  // });
+
+  firebase.firestore().collection(community).doc(docId).delete;
+
+  dispatch({ type: DELETE_POST });
+  dispatch(
+    alertSuccess("post deleted, reverting to community page", "success")
+  );
+  dispatch(retrievePostsByCommunity(community));
 };

@@ -110,7 +110,7 @@ const Login: FunctionComponent<LoginProps> = ({ toggleLogin }) => {
         </Container>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary" autoFocus>
+        <Button onClick={handleClose} color="primary">
           Close
         </Button>
       </DialogActions>
