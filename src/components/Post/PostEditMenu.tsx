@@ -2,13 +2,21 @@ import { Button, Grid, Typography } from "@material-ui/core";
 import React, { Fragment, FunctionComponent, useState } from "react";
 import useStyles from "../../styles/customStyles";
 import DeletePostPopup from "./DeletePostPopup";
+import { match } from "react-router";
 
 interface PostEditMenuProps {
   toggleEditView: () => void;
+  match: matchOverwrite;
 }
 
+interface matchOverwrite extends match {
+  params: { [key: string]: string };
+  // i need to tell typescript that params will
+  //indeed be of property (type strings) of strings
+}
 const PostEditMenu: FunctionComponent<PostEditMenuProps> = ({
   toggleEditView,
+  match,
 }) => {
   const [deletePopup, showDeletePopup] = useState(false);
   const classes = useStyles();
@@ -33,7 +41,10 @@ const PostEditMenu: FunctionComponent<PostEditMenuProps> = ({
         <Typography></Typography>
       </Grid>
       {deletePopup ? (
-        <DeletePostPopup toggleDeletePostPopup={toggleDeletePostPopup} />
+        <DeletePostPopup
+          match={match}
+          toggleDeletePostPopup={toggleDeletePostPopup}
+        />
       ) : (
         ""
       )}

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { match } from "react-router-dom";
+
 import { retrievePostsByCommunity, updatePost } from "../../actions/posts";
 import { RootState, useThunkDispatch } from "../../definitions";
 import Grid from "@material-ui/core/Grid";
@@ -15,6 +15,7 @@ import PostEditMenu from "./PostEditMenu";
 import CommentBox from "./CommentBox";
 import Comments from "./Comments";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { match } from "react-router";
 
 import {
   Checkbox,
@@ -184,16 +185,17 @@ const PostPage: FunctionComponent<PostPageProps> = ({ match }) => {
                 )}
 
                 {authState.uid === specificPost.uid && (
-                  <PostEditMenu toggleEditView={toggleEditView} />
+                  <PostEditMenu match={match} toggleEditView={toggleEditView} />
                 )}
-                {authState.isAuthenticated && (
-                  <CommentBox
-                    community={match.params.community}
-                    docId={match.params.docId}
-                  />
-                )}
-                <Comments comments={specificPost.comments} />
               </Grid>
+              {/* formatting of comments below the main post */}
+              {authState.isAuthenticated && (
+                <CommentBox
+                  community={match.params.community}
+                  docId={match.params.docId}
+                />
+              )}
+              <Comments comments={specificPost.comments} />
             </Grid>
           </Grid>
           <Grid item xs={3}>
